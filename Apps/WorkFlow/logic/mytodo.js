@@ -3,16 +3,20 @@ define([],function(){
         this.pageviewInstance = config.pageview;
         //获取到url参数
         this.urlParams = this.pageviewInstance.params;
+        
     }
     pageLogic.prototype = {
         // right_icon_didmount:function(sender){
         // },
-        
+        onPageResume:function(){
+        	this.page_content_reload();
+        },
         backIcon_click:function(sender,params){
           //this.pageviewInstance.goBack();
         },
         right_icon_click:function(sender,params){
-          this.page_content_reload();
+        	this.page_content_reload();
+         	//this.pageviewInstance.replaceGo("mainpage",this.pageviewInstance.params);
         },
         //page_content 组件声明事件 让该组件具备下拉刷新的功能
         page_content_pulltorefresh:function(sender,params){
@@ -52,10 +56,11 @@ define([],function(){
         listview_rowclick:function(sender){
             sender.select();            
             var param={userCode:this.urlParams.userCode,
+            	userName:this.urlParams.userName,
             	procedureName:sender.datasource.procedureName,
-            	ptype:this.urlParams.$$pn
+            	ptype:"mytodo"
             };
-            this.pageviewInstance.go("procedureList",param);
+            this.pageviewInstance.replaceGo("procedureList",param);
         },
     };
     return pageLogic;

@@ -2,7 +2,7 @@ define(["../logic/noticeInfo"], function(pluginClass) {
 	return {
 		pluginClass: pluginClass,
 		style: {
-			backgroundColor: "#f0f4f6"
+			backgroundColor: "#f1f1f1"
 		},
 		root: ["paga_header", "page_content"],
 		components: {
@@ -59,18 +59,23 @@ define(["../logic/noticeInfo"], function(pluginClass) {
 			},
 			page_content: {
 				type: "view",
-				root: ["info_view"],
+				root: ["info_view","feed_view"],
 				style: {
 					flex: 1,
 					overflowY: "auto",
-					backgroundColor: "#fff"
+					backgroundColor: "#f1f1f1"
 				}
 			},
 			info_view: {
 				type: "view",
 				style: {
+					backgroundColor: "#fff",
 					flexDirection: "column",
-					justifyContent:"center"
+					justifyContent:"center",
+					paddingTop: 8,
+					paddingBottom: 8,
+					paddingLeft: 8,
+					paddingRight: 8,
 				},
 				root: ["title_view","author_view","splitline", "content_view"]
 			},
@@ -98,11 +103,23 @@ define(["../logic/noticeInfo"], function(pluginClass) {
 				style: {					
 					justifyContent:"center",
 					paddingTop: 8,
-					paddingBottom: 8,
+					paddingBottom: 15,
 					paddingLeft: 8,
 					paddingRight: 8,
 				},
 				root: ["txt_content"]
+			},
+			feed_view: {
+				type: "view",
+				style: {
+					backgroundColor: "#f1f1f1",
+					justifyContent:"center",
+					paddingTop: 15,
+					paddingBottom: 8,
+					paddingLeft: 8,
+					paddingRight: 8,
+				},
+				root: ["feed_textarea","btn_submit"]
 			},
 			txt_title: {
 				type: "text",
@@ -110,7 +127,7 @@ define(["../logic/noticeInfo"], function(pluginClass) {
 				text: "",				
 				style: {
 					justifyContent:"center",
-					fontSize: 16,
+					fontSize: 17,
 					fontWeight:"bold",
 					color: "#333"
 				},
@@ -120,7 +137,7 @@ define(["../logic/noticeInfo"], function(pluginClass) {
 				ref: true,
 				text: "",
 				style: {
-					fontSize: 11,
+					fontSize: 13,
 					color: "#333"
 				},
 			},
@@ -131,7 +148,7 @@ define(["../logic/noticeInfo"], function(pluginClass) {
 				preText:" (",
 				nextText:")",
 				style: {
-					fontSize: 11,
+					fontSize: 13,
 					color: "#333"
 				},
 			},
@@ -141,7 +158,7 @@ define(["../logic/noticeInfo"], function(pluginClass) {
 					left: 8,
 					bottom: 0,
 					right: 0,
-					borderTop: "1px solid rgb(245, 245, 245)"
+					borderTop: "2px solid rgb(245, 245, 245)"
 				}
 			},
 			txt_content: {
@@ -149,10 +166,33 @@ define(["../logic/noticeInfo"], function(pluginClass) {
 				ref: true,
 				text: "",
 				style: {
-					fontSize: 13,
+					fontSize: 15,
 					color: "#f00"
 				},
 			},
+			
+			feed_textarea:{
+              type:"textarea",
+              placeholder:"请输入回复信息",
+              style:{
+                height:100,
+                paddingLeft:7,
+                fontSize:15,
+                paddingTop:5,
+              },
+            },
+            btn_submit:{
+              type:"button",
+              mode:"2",
+              style:{
+                margin:"10px auto",
+                backgroundColor: "#F38236",
+                width:250,
+                height:35,
+                marginBottom:30
+              },
+              title:"回复"
+            },
 		}
 	};
 });

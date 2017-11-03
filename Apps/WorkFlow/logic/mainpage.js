@@ -6,9 +6,8 @@ define([],function(){
     }
     pageLogic.prototype = {
         
-        mytodo_itemClick(){
-        	alert("todo");
-        	
+        tabbar_itemClick:function(sender,params){
+        	alert("todo");        	
         }
     };
     return pageLogic;

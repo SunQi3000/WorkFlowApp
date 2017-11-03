@@ -76,7 +76,7 @@ define(["utils", "pageview", "$", "tip"], function(utils, PageView, $, Tip) {
                 this.go(config.root, this.getParamsFromUrl());
             } else {
                 this.hashChange();
-                var pageKeyArr = toPage.split("$$");
+                var pageKeyArr = toPage.split("$$$");
                 if (pageKeyArr.length == 2) {
                     this.pagekeySeed = parseInt(pageKeyArr[1]);
                 }
@@ -387,14 +387,14 @@ define(["utils", "pageview", "$", "tip"], function(utils, PageView, $, Tip) {
         _getUniquePageKey: function(pagekey) {
             var hasSameKeyInStack = false;
             for (var key in this.pages) {
-                var key_arr = key.split("$$");
+                var key_arr = key.split("$$$");
                 if (key_arr[0] == pagekey) {
                     this.pagekeySeed += 1;
                     hasSameKeyInStack = true;
                     break;
                 }
             }
-            return hasSameKeyInStack ? (pagekey + "$$" + this.pagekeySeed) : pagekey;
+            return hasSameKeyInStack ? (pagekey + "$$$" + this.pagekeySeed) : pagekey;
         },
         _getPageConfigSuccess: function(pageKey, pageConfig, success) {
             pageConfig = utils.copy(pageConfig);
@@ -406,7 +406,7 @@ define(["utils", "pageview", "$", "tip"], function(utils, PageView, $, Tip) {
         },
         getPageConfigByPageKey: function(pageKey, success, error) {
             var _this = this;
-            var page_path = "./pages/" + pageKey.split("$$")[0];
+            var page_path = "./pages/" + pageKey.split("$$$")[0];
             var _pageConfig = utils.getPageConfigByPagePath(page_path);
             if (_pageConfig) {
                 this._getPageConfigSuccess(pageKey, _pageConfig, success);

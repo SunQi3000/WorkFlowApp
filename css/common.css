@@ -9,8 +9,10 @@
     font-style: normal;
 }
 
-embed {
-    display: none;
+.yy-embed {
+    -webkit-overflow-scrolling:touch;
+    overflow:auto!important;
+    overflow-y:auto;
 }
 
 .sticky {

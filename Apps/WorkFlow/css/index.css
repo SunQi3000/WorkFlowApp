@@ -5,6 +5,9 @@
   font-weight: normal;
   font-style: normal;
 }
+.list-checkicon-selected .yy-icon-code:before{
+    content: "\f058";
+}
 .wf-sgm-item-selected {
     color: #000 !important;
     font-weight: bold;

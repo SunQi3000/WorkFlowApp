@@ -4,7 +4,7 @@ define(["../logic/notice"], function(pluginClass) {
 		style: {
 			backgroundColor: "#f0f4f6"
 		},
-		root: ["paga_header", "page_content"],
+		root: ["paga_header", "page_content","page_footer"],
 		components: {
 			paga_header: {
 				type: "view",
@@ -83,7 +83,6 @@ define(["../logic/notice"], function(pluginClass) {
 					flexDirection: 'column',
 					paddingLeft: 8,
 					paddingRight: 8,
-					paddingBottom: 30,
 				},
 				rowStyle: {
 					paddingTop: 15,
@@ -120,7 +119,8 @@ define(["../logic/notice"], function(pluginClass) {
 				type: "text",
 				numberofline:1,
 				style: {
-					fontSize: 13,
+					fontSize: 16,
+					fontWeight:"bold",
 					color: "#333"
 				},
 				text_bind: "title"
@@ -137,7 +137,7 @@ define(["../logic/notice"], function(pluginClass) {
 			row_go: {
 				type: "icon",
 				iconStyle: {
-					fontSize: 14
+					fontSize: 16
 				},
 				style: {
 					width: "30px",
@@ -145,6 +145,14 @@ define(["../logic/notice"], function(pluginClass) {
 				},
 				font: "icomoon_e913"
 			},
+			page_footer:{
+                type:"view",
+                style:{
+                    height:40,
+                    backgroundColor:"#fff",
+                    borderTop:"1px solid #eee"
+                }
+            }
 		}
 	};
 });

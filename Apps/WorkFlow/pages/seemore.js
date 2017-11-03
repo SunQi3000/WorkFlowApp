@@ -111,7 +111,7 @@ define(["../logic/seemore"], function(pluginClass) {
 						icon: "FontAwesome_f199"
 					},
 					{
-						label: "帮助",
+						label: "功能介绍",
 						icon: "FontAwesome_f02d"
 					},
 					{

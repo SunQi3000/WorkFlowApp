@@ -5,6 +5,17 @@ define([], function(calendarpicker) {
 		this.router_data = [];
 		this.taskActor_data = [];
 
+		this.routerFunc = "";
+		this.taskActorFunc = "";
+		if(this.urlParams.workflowfunc == "WorkFlowSend") {
+			this.routerFunc = "GetWorkFlowSendRouter";
+			this.taskActorFunc = "GetWorkFlowSendTaskActor ";
+		}
+		if(this.urlParams.workflowfunc == "WorkFlowBack") {
+			this.routerFunc = "GetWorkFlowBackRouter";
+			this.taskActorFunc = "GetWorkFlowBackTaskActor";
+		}
+
 	};
 	pageLogic.prototype = {
 		onPageLoad: function() {
@@ -13,31 +24,38 @@ define([], function(calendarpicker) {
 					userCode: this.urlParams.userCode,
 					actCode: this.urlParams.actCode
 				};
-				Submit(this.urlParams.workflowfunc, sendParams, this.pageviewInstance);
+				Submit(this.urlParams, sendParams, this.pageviewInstance);
+			}
+			if(this.urlParams.auditSwitch == "0") {
+				this.pageviewInstance.delegate("audit_wrapper", function(target) {
+					target.hide();
+				});
 			}
 			if(this.urlParams.workflowfunc == "WorkFlowFinish" || this.urlParams.workflowfunc == "WorkFlowTaskFinish") {
-				
+
 				this.pageviewInstance.delegate("router_Wrpper", function(target) {
 					target.hide();
-					//target 为目标组件的实例对象
 				});
 				this.pageviewInstance.delegate("taskActor_Wrapper", function(target) {
 					target.hide();
-					//target 为目标组件的实例对象
 				});
 			}
 		},
 
-		backIcon_click: function(sender, params) {			
+		backIcon_click: function(sender, params) {
 			var sendParams = {
 				userCode: this.urlParams.userCode,
-				actCode: this.urlParams.actCode
-			};			
-			this.pageviewInstance.replaceGo("procedureInfo",sendParams);
+				actCode: this.urlParams.actCode,
+				userName:this.urlParams.userName,
+				procedureName:this.urlParams.procedureName,
+				ptype:this.urlParams.ptype
+			};
+			this.pageviewInstance.replaceGo("procedureInfo", sendParams);
 			//this.pageviewInstance.goBack();
 		},
 		radiolist_init: function(sender, params) {
-			GetRouterData(this.pageviewInstance, this.urlParams, this.router_data);
+
+			GetRouterData(this.routerFunc, this.pageviewInstance, this.urlParams, this.router_data);
 			this.radiolist = sender;
 			if(this.router_data.length > 0) {
 				var defaultSelectedData = this.router_data[0];
@@ -69,7 +87,7 @@ define([], function(calendarpicker) {
 			});
 			if(routerFound.length > 0) {
 				var ReRouterCode = routerFound[0].id;
-				GetTaskActorData(this.pageviewInstance, this.urlParams, ReRouterCode, this.taskActor_data);
+				GetTaskActorData(this.taskActorFunc, this.pageviewInstance, this.urlParams, ReRouterCode, this.taskActor_data);
 			}
 			var data = this.taskActor_data;
 			var successCallback = params.success;
@@ -106,6 +124,7 @@ define([], function(calendarpicker) {
 		opinion_textarea_init: function(sender, params) {
 			this.opinion_textarea = sender;
 		},
+		
 		submitbtn_click: function(sender, params) {
 			var ReRouterCode = "";
 			var ReTaskActors = "";
@@ -136,6 +155,9 @@ define([], function(calendarpicker) {
 			} else {
 				ReAuditValue = "Reject";
 			}
+			if(this.urlParams.auditSwitch == "0") {
+				ReAuditValue = "";
+			}
 
 			var sendParams;
 			if(this.urlParams.workflowfunc == "WorkFlowSignIn") {
@@ -165,6 +187,7 @@ define([], function(calendarpicker) {
 				if(ReOpinion == "") {
 					alert("请填写处理意见");
 				}
+
 				sendParams = {
 					userCode: this.urlParams.userCode,
 					actCode: this.urlParams.actCode,
@@ -177,14 +200,40 @@ define([], function(calendarpicker) {
 
 			//alert(JSON.stringify(sendParams));
 			this.opinion_textarea.setValue(JSON.stringify(sendParams));
-			Submit(this.urlParams.workflowfunc, sendParams, this.pageviewInstance);
+			//todo: 提交等待?
+			//Submit(this.urlParams, sendParams, this.pageviewInstance);
 		},
+		selectbtn_click: function(sender, params) {
+			var ReRouterCode="";
+			var selectedRouter = this.router_value.text;
+			var routerFound = this.router_data.filter(function(item) {
+				return(item.label === selectedRouter);
+			});
+			if(routerFound.length > 0) {
+				ReRouterCode = routerFound[0].id;
+			}
+			var sh={
+				    pageKey:"selectActor",
+				    mode:"fromBottom",
+				    params:{
+				    	userCode: this.urlParams.userCode,
+						actCode: this.urlParams.actCode,
+						routerCode: ReRouterCode		
+				    }
+				}
+			this.pageviewInstance.showPage(sh);
+			/*this.pageviewInstance.go("selectActor",{
+				    	userCode: this.urlParams.userCode,
+						actCode: this.urlParams.actCode,
+						routerCode: ReRouterCode		
+				    });*/
+		}
 	};
 
 	//获取流向
-	function GetRouterData(sender, params, returnObj) {
+	function GetRouterData(urlFunction, sender, params, returnObj) {
 		var sendParams = {
-			url: 'GetWorkFlowSendRouter',
+			url: urlFunction,
 			dataType: 'jsonp',
 			contentType: "application/json;charset=utf-8",
 			type: 'post',
@@ -210,9 +259,9 @@ define([], function(calendarpicker) {
 	};
 
 	//获取处理人
-	function GetTaskActorData(sender, params, routerId, returnObj) {
+	function GetTaskActorData(urlFunction, sender, params, routerId, returnObj) {
 		var sendParams = {
-			url: 'GetWorkFlowSendTaskActor',
+			url: urlFunction,
 			dataType: 'jsonp',
 			contentType: "application/json;charset=utf-8",
 			type: 'post',
@@ -226,11 +275,15 @@ define([], function(calendarpicker) {
 					returnObj.splice(0, returnObj.length);
 					for(var i = 0; i < data.data.length; i++) {
 						for(var j = 0; j < data.data[i].users.length; j++) {
+							var actorName = data.data[i].users[j].userName;
+							if(data.data[i].taskActorName) {
+								actorName += '(' + data.data[i].taskActorName + ')';
+							}
 							returnObj.push({
 								"id": i.toString() + '_' + j.toString(),
 								"taskActorCode": data.data[i].taskActorCode,
 								"userCode": data.data[i].users[j].userCode,
-								"text": data.data[i].users[j].userName + '(' + data.data[i].taskActorName + ')'
+								"text": actorName
 							});
 						}
 					}
@@ -243,18 +296,21 @@ define([], function(calendarpicker) {
 	};
 
 	//提交事件
-	function Submit(urlFunction, params, sender) {
+	function Submit(urlpm, params, sender) {
 		var sendParams = {
-			url: urlFunction,
+			url: urlpm.workflowfunc,
 			dataType: 'jsonp',
 			contentType: "application/json;charset=utf-8",
 			type: 'post',
 			data: params,
 			success: function(data) {
 				if(data.result) {
-					sender.go("procedureInfo", {
-						userCode: params.userCode,
-						actCode: params.actCode
+					sender.replaceGo("procedureInfo", {
+						userCode: urlpm.userCode,
+						actCode: urlpm.actCode,
+						userName:urlpm.userName,
+						procedureName:urlpm.procedureName,
+						ptype:urlpm.ptype
 					});
 				} else {
 					alert(data.msg);

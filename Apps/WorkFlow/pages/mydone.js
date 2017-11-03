@@ -1,10 +1,10 @@
-define(["../logic/mytodo"], function(pluginClass) {
+define(["../logic/mydone"], function(pluginClass) {
 	return {
 		pluginClass: pluginClass,
 		style: {
 			backgroundColor: "#f0f4f6"
 		},
-		root: ["paga_header", "page_content"],
+		root: ["paga_header", "page_content","page_footer"],
 		components: {
 			paga_header: {
 				type: "view",
@@ -72,10 +72,10 @@ define(["../logic/mytodo"], function(pluginClass) {
 					url: "GetWorkFlowActGroupDone",
 					type: "GET",
 					dataType: "jsonp",
-					pageSize: 20,
+					pageSize: 99999,
 					pageNumKey: "pageNum",
 					data: {
-						pageSize: 20
+						pageSize: 99999
 					},
 				},
 				style: {
@@ -100,7 +100,7 @@ define(["../logic/mytodo"], function(pluginClass) {
 			},
 			row_left: {
 				type: "view",
-				root: ["row_name", "row_leftbracket", "row_count", "row_rightbracket"],
+				root: ["row_name", "row_count"],
 				style: {
 					flexDirection: "row"
 				}
@@ -116,7 +116,8 @@ define(["../logic/mytodo"], function(pluginClass) {
 			row_name: {
 				type: "text",
 				style: {
-					fontSize: 13,
+					fontSize: 16,
+					fontWeight:"bold",
 					color: "#333"
 				},
 				text_bind: "procedureName"
@@ -124,31 +125,19 @@ define(["../logic/mytodo"], function(pluginClass) {
 			row_count: {
 				type: "text",
 				style: {
-					fontSize: 13,
+					fontSize: 16,
+					fontWeight:"bold",
 					color: "#333"
 				},
-				text_bind: "actCount"
+				text_bind: "actCount",
+				preText:"(",
+				nextText:")"
 			},
-			row_leftbracket: {
-				type: "text",
-				text: " ( ",
-				style: {
-					fontSize: 13,
-					color: "#333"
-				},
-			},
-			row_rightbracket: {
-				type: "text",
-				text: " ) ",
-				style: {
-					fontSize: 13,
-					color: "#333"
-				},
-			},
+			
 			row_go: {
 				type: "icon",
 				iconStyle: {
-					fontSize: 14
+					fontSize: 16
 				},
 				style: {
 					width: "30px",
@@ -156,6 +145,14 @@ define(["../logic/mytodo"], function(pluginClass) {
 				},
 				font: "icomoon_e913"
 			},
+			page_footer:{
+                type:"view",
+                style:{
+                    height:40,
+                    backgroundColor:"#fff",
+                    borderTop:"1px solid #eee"
+                }
+            }
 		}
 	};
 });

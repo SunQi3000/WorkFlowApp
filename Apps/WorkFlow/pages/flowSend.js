@@ -4,7 +4,7 @@ define(["../logic/flowSend"],function(pluginClass){
         style:{
             backgroundColor:"#f0f4f6"
         },
-        root:["page_header","pagecontent","checklist","radiolist"],
+        root:["page_header","pagecontent","checklist","radiolist","selectbtn"],
         components:{
             checklist:{
               type:"checklist",
@@ -42,7 +42,7 @@ define(["../logic/flowSend"],function(pluginClass){
 					fontSize: "25px",
 				}
             },
-            header_title:{
+            header_title:{            	
                 type:"text",
                 text:"",
                 style:{
@@ -171,6 +171,7 @@ define(["../logic/flowSend"],function(pluginClass){
               
             },
             taskActor_value:{
+              ref:true,
               type:"icon",
               textPos:"left",
               style:{flex:1,justifyContent:"flex-end"},
@@ -223,7 +224,8 @@ define(["../logic/flowSend"],function(pluginClass){
                 margin:"10px auto",
                 width:300,
                 height:35,
-                marginBottom:30
+                marginBottom:30,
+                backgroundColor:"#F38236"
               },
               title:"提交"
             },           
@@ -255,7 +257,18 @@ define(["../logic/flowSend"],function(pluginClass){
                 paddingTop:5,
               },
             },
-            
+            selectbtn:{
+              type:"button",
+              mode:"2",
+              style:{
+                margin:"10px auto",
+                width:300,
+                height:35,
+                marginBottom:30,
+                backgroundColor:"#F38236"
+              },
+              title:"选择人员"
+            },           
         }
     };
 });

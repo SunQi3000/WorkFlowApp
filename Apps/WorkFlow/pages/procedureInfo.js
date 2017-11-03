@@ -80,7 +80,7 @@ define(["../logic/procedureInfo"], function(pluginClass) {
 				}],
 				root: ["segment_item"],
 				style: {
-					height: 24,
+					height: 32,
 					width: "100%"
 				},
 
@@ -89,7 +89,7 @@ define(["../logic/procedureInfo"], function(pluginClass) {
 				type: "icon",
 				selectedClassName: "wf-sgm-item-selected",
 				textStyle: {
-					fontSize: 15,
+					fontSize: 18,
 					marginLeft: 3
 				},
 				iconStyle: {
@@ -141,14 +141,14 @@ define(["../logic/procedureInfo"], function(pluginClass) {
 			},
 			row_view: {
 				type: "view",
-				style: {
+				style: {					
 					flexDirection: "row"
 				},
 				root: ["row_content1"]
 			},
 			row_content1: {
 				type: "view",
-				style: {
+				style: {					
 					flexDirection: "column",
 					width: "100%"
 				},
@@ -166,7 +166,7 @@ define(["../logic/procedureInfo"], function(pluginClass) {
 			row_line2: {
 				type: "view",
 				root: ["left2", "right2"],
-				style: {
+				style: {					
 					flexDirection: "row",
 					justifyContent: 'space-between',
 					paddingRight: 10,
@@ -185,7 +185,8 @@ define(["../logic/procedureInfo"], function(pluginClass) {
 			left1: {
 				type: "text",
 				style: {
-					fontSize: 13,
+					fontSize: 16,
+					fontWeight:"bold",
 					color: "#333",
 				},
 				text_bind: "left1"
@@ -195,6 +196,7 @@ define(["../logic/procedureInfo"], function(pluginClass) {
 				numberofline: 1,
 				style: {
 					fontSize: 13,
+					fontWeight:"bold",
 					color: "#333"
 				},
 				text_bind: "right1"
@@ -202,7 +204,7 @@ define(["../logic/procedureInfo"], function(pluginClass) {
 			left2: {
 				type: "text",
 				style: {
-					fontSize: 13,
+					fontSize: 16,
 					color: "#333",
 
 				},
@@ -213,15 +215,16 @@ define(["../logic/procedureInfo"], function(pluginClass) {
 				numberofline: 1,
 				style: {
 					fontSize: 13,
-					color: "#333",
+					color: "#8d8d8d",
 				},
 				text_bind: "right2"
 			},
 			left3: {
 				type: "text",
+				numberofline: 1,
 				style: {
 					fontSize: 13,
-					color: "#333",
+					color: "#8d8d8d",
 				},
 				text_bind: "left3"
 			},
@@ -229,7 +232,7 @@ define(["../logic/procedureInfo"], function(pluginClass) {
 				type: "text",
 				style: {
 					fontSize: 13,
-					color: "#333",
+					color: "#8d8d8d",
 				},
 				text_bind: "right3"
 			},
@@ -273,7 +276,7 @@ define(["../logic/procedureInfo"], function(pluginClass) {
 					backgroundColor: "#fff"
 				},
 				textStyle: {
-					fontSize: 16,
+					fontSize: 18,
 					fontWeight:"bold",
 					color: "#292f33"
 				}
@@ -310,7 +313,7 @@ define(["../logic/procedureInfo"], function(pluginClass) {
 				},
 				iconStyle: {					
 					display: "flex",
-					fontSize: 27,
+					fontSize: 30,
 					justifyContent: "center",
 					alignItems: "center",
 					backgroundColor: "#f0f4f6",
@@ -318,6 +321,7 @@ define(["../logic/procedureInfo"], function(pluginClass) {
 				},
 				textStyle: {
 					marginTop: 8,
+					fontSize: 16,
 					color: "#292f33"
 				},
 				font: "icomoon_e914",

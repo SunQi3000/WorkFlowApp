@@ -206,7 +206,9 @@ define(["utils", "base"], function(utils, baseClass) {
 	Component.prototype.getAjaxHost = function() {
 		return utils.appConfig.host;
 	};
-      
+    Component.prototype.getAppConfig = function() {
+		return utils.appConfig;
+	};  
 	Component.prototype.Enter = function(className, isInit) {
 		var _this = this;
 		this.$el[0].className = className;

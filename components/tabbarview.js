@@ -39,7 +39,7 @@ define(["utils","base"],function(utils,baseClass){
     Component.prototype._itemClick = function(com_instance,isInit){
       var _this = this;
       if(this.selectedItem === com_instance ){
-        alert("点了又点");
+        //alert("点了又点");
         return;
       }
       if(this.selectedItem){

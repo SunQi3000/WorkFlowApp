@@ -14,8 +14,11 @@ define([],function(){
         repeat_itemclick:function(sender,params){
           var title = sender.datasource.label;          
          // this.pageviewInstance.showTip({text:title,duration:800});
-         if(title=="问题与意见"){
-         	//
+         if(title=="功能介绍"){
+         	this.pageviewInstance.go("helpfile");
+         }
+         if(title=="关于我们"){
+         	this.pageviewInstance.go("versionInfo");
          }
          if(title=="注销"){
          	this.pageviewInstance.go("index");
@@ -25,5 +28,6 @@ define([],function(){
           //this.pageviewInstance.goBack();
         },
     };
+    
     return pageLogic;
 });

@@ -4,6 +4,7 @@ define(["utils"], function(utils) {
             PM.start({
             	host11: "http://123.103.9.201:4031/workflowwebservice55/query.asmx",
                 host: "http://10.23.71.57/workflowwebservice55/query.asmx",
+                helppdf: "http://10.23.71.57/workflowwebservice55/pdfjs/web/viewer.html?file=V60WorkFlow-help.pdf",                
                 root: "index",
                 customerComponents: {
 

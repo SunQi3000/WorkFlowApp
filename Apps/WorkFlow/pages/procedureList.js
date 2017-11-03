@@ -79,7 +79,7 @@ define(["../logic/procedureList"], function(pluginClass) {
 				}],
 				root: ["segment_item"],
 				style: {
-					height: 24,
+					height: 32,
 					width: "100%"
 				},
 
@@ -88,7 +88,7 @@ define(["../logic/procedureList"], function(pluginClass) {
 				type: "icon",
 				selectedClassName: "wf-sgm-item-selected",
 				textStyle: {
-					fontSize: 15,
+					fontSize: 18,
 					marginLeft: 3
 				},
 				iconStyle: {
@@ -111,10 +111,10 @@ define(["../logic/procedureList"], function(pluginClass) {
 					url: "GetWorkFlowActListSigned",
 					type: "GET",
 					dataType: "jsonp",
-					pageSize: 20,
+					pageSize: 99999,
 					pageNumKey: "pageNum",
 					data: {
-						pageSize: 20
+						pageSize: 99999
 					},
 				},
 				style: {
@@ -192,7 +192,8 @@ define(["../logic/procedureList"], function(pluginClass) {
 			row_title: {
 				type: "text",
 				style: {
-					fontSize: 13,
+					fontSize: 16,
+					fontWeight:"bold",
 					color: "#333",
 				},
 				text_bind: "title"
@@ -200,7 +201,7 @@ define(["../logic/procedureList"], function(pluginClass) {
 			row_flowNumber: {
 				type: "text",
 				style: {
-					fontSize: 13,
+					fontSize: 14,
 					color: "#333"
 				},
 				text_bind: "flowNumber"
@@ -209,7 +210,8 @@ define(["../logic/procedureList"], function(pluginClass) {
 			row_fromUserName: {
 				type: "text",
 				style: {
-					fontSize: 13,
+					fontSize: 16,
+					fontWeight:"bold",
 					color: "#333",
 					justifyContent: 'flex-end'
 				},

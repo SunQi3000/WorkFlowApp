@@ -2,7 +2,7 @@ define(["../logic/index"], function(pluginClass) {
     var Re = {
         pluginClass: pluginClass,
         style: {
-            backgroundColor: "#f0f3f4"
+            backgroundColor: "#f1f1f1"
         },
         root: ["page_header","page_content"],
         components: {
@@ -31,7 +31,7 @@ define(["../logic/index"], function(pluginClass) {
                 style: {
                     flex: 1,
                     overflowY: "auto",
-                    backgroundColor:"#f3f4f5"
+                    backgroundColor:"#ececec"
                 },
                 root: ["view_login","view_button"]
             },
@@ -39,8 +39,13 @@ define(["../logic/index"], function(pluginClass) {
                 type: "view",
                 style: {
                     flex: 1,
-                    backgroundColor:"#ffffff",
-                    paddingTop:30
+                    backgroundColor:"#f7f7f7",                    
+                    margin:"20px 20px,20px,20px",                   
+                    paddingTop:80,
+                    paddingLeft:10,
+                    paddingRight:10,
+                    height:120,
+                    border:"2px solid #dddddd",
                 },
                 root: ["txt_username","txt_password"]
             },
@@ -58,9 +63,9 @@ define(["../logic/index"], function(pluginClass) {
               style:{
               	margin:"1px auto",
                 height:40,
-                width:300,
+                width:250,
                 backgroundColor:"#fff",
-                fontSize:13,
+                fontSize:17,
                 paddingLeft:7,
                 border:"1px solid #eee",
               },
@@ -73,9 +78,9 @@ define(["../logic/index"], function(pluginClass) {
               style:{              	
                 margin:"5px auto",
                 height:40,
-                width:300,
+                width:250,
                 backgroundColor:"#fff",
-                fontSize:13,
+                fontSize:17,
                 paddingLeft:7,
                 border:"1px solid #eee",
               },
@@ -86,11 +91,14 @@ define(["../logic/index"], function(pluginClass) {
               mode:"2",
               style:{
                 margin:"10px auto",
-                width:300,
+                width:250,
                 height:35,
-                marginBottom:30
+                marginBottom:30,
+                backgroundColor:"#F38236",
+                fontSize:17,
+                fontWeight:"bold",
               },
-              title:"提交"
+              title:"登  录"
             },
             
         },

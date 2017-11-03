@@ -1,24 +1,19 @@
-/**
- * 首页的上下分类
- **/
 define(["utils"], function(utils) {
 
 	function pageLogic(config) {
-		this.pageviewInstance = config.pageview;
-		this.userCode = '';
-
+		this.pageviewInstance = config.pageview;		
 	}
 	pageLogic.prototype = {
-
+		
 		txt_username_init: function(sender, params) {
 			this.txt_username = sender;
 		},
+		
 		txt_password_init: function(sender, params) {
 			this.txt_password = sender;
 		},
 		btn_submit_click: function(sender, params) {
-			alert("aa");
-
+			//alert("aa");
 			var params = {
 				url: 'Login',
 				dataType: 'jsonp',

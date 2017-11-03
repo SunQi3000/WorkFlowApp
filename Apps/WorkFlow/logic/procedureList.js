@@ -22,7 +22,12 @@ define(["../js/func"], function() {
 			sender.config.font = sender.datasource.icon;
 		},
 		backIcon_click: function(sender, params) {
-			this.pageviewInstance.goBack();
+			//this.pageviewInstance.goBack();
+			var param={userCode:this.urlParams.userCode,
+            	userName:this.urlParams.userName,
+            	$$pn:this.urlParams.ptype
+            };
+		    this.pageviewInstance.replaceGo("mainpage",param);
 		},
 		right_icon_click: function(sender, params) {
 			this.page_content_reload();
@@ -96,7 +101,7 @@ define(["../js/func"], function() {
 			}
 			if(this.selectedSeg == "更早") {
 				result.data = result.data.filter(function(item) {
-					return item.fromDate < strTodayTimeStart;
+					return item.fromDate < strMondayTimeStart;
 				});
 			}
 			return result.data;
@@ -106,9 +111,12 @@ define(["../js/func"], function() {
 			//alert("ddd");
 			var param = {
 				userCode: this.urlParams.userCode,
-				actCode: sender.datasource.actCode
+				actCode: sender.datasource.actCode,
+				userName:this.urlParams.userName,
+				procedureName:this.urlParams.procedureName,
+				ptype:this.urlParams.ptype
 			};
-			this.pageviewInstance.go("procedureInfo",param);
+			this.pageviewInstance.replaceGo("procedureInfo",param);
 		},
 		
 		segment_change: function(sender, params) {

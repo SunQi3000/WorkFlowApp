@@ -5,6 +5,7 @@ define([], function() {
 		this.urlParams = this.pageviewInstance.params;
 		this.selectedSeg = "业务信息";
 		this.pdfFileUrl = "";
+		this.auditResult="0";//流程审批结果的显示项目:0-visible false,1-Approve&Reject
 
 		//var params ={userCode: "100000",actCode:"114024"};  
 
@@ -65,7 +66,13 @@ define([], function() {
 			LoadData(this);
 		},
 		backIcon_click: function(sender, params) {
-			this.pageviewInstance.goBack();			
+			//this.pageviewInstance.goBack();
+			var param={userCode:this.urlParams.userCode,
+            	userName:this.urlParams.userName,
+				procedureName:this.urlParams.procedureName,
+				ptype:this.urlParams.ptype
+           };            
+		    this.pageviewInstance.replaceGo("procedureList",param);
 		},
 		header_title_init: function(sender, params) {
 			this.header_title = sender;
@@ -85,7 +92,11 @@ define([], function() {
 			var param = {
 				userCode: this.urlParams.userCode,
 				actCode: this.urlParams.actCode,
-				workflowfunc: sender.datasource.func
+				auditSwitch: this.auditResult,
+				workflowfunc: sender.datasource.func,
+				userName:this.urlParams.userName,
+				procedureName:this.urlParams.procedureName,
+				ptype:this.urlParams.ptype
 			};
 			this.pageviewInstance.replaceGo("flowSend", param);
 			this.poplayer.hide();
@@ -144,6 +155,15 @@ define([], function() {
 			if(!result.result) {
 				return false;
 			}
+			var au=result.data.auditResult;
+			if(au.visible){				
+				if(au.items.length>0){					
+					this.auditResult="1";
+				}
+			}else{
+				this.auditResult="0";
+			}
+			
 			var tt = result.data.toolbar;
 			var items = [];
 			/*items.push(this.Button_signIn);

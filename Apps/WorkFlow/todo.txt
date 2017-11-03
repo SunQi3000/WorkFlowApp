@@ -1,0 +1,13 @@
+todo: 
+1、流转人员的多选择页面
+2、公告 回复功能(2017-11-16 over)
+3、更多-〉 帮助等完善(2017-11-16 over)
+
+2017-11-15: 尝试gulp 成功了。
+
+    安装gulp npm install gulp -g
+    npm install -g gulp
+    命令行到具体项目目录下,执行gulp
+新建package.json文件
+
+
