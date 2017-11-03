@@ -343,19 +343,14 @@ define(["utils","base"],function(utils,baseClass){
         this.pluginAfterLoadDataMethod = this.pageview.plugin[pluginAfterLoadDataMethodName];
 
 
-        var DemoMethodName = this.config.comKey+"_demo演示";
-        this.DemoMethod = this.pageview.plugin[DemoMethodName];
+        //var DemoMethodName = this.config.comKey+"_demo演示";
+        //this.DemoMethod = this.pageview.plugin[DemoMethodName];
 
 
         this.init();
 
     }
     utils.extends(Component,baseClass);
-
-
-
-
-
 
     Component.prototype.setLeftOpen = function(){
       if(this.status==="edit"){
@@ -746,6 +741,8 @@ define(["utils","base"],function(utils,baseClass){
       utils.ajax({
             type:this.ajaxConfig.type||'get',
             url:this.ajaxConfig.url,
+            dataType: this.ajaxConfig.dataType,
+            contentType:this.ajaxConfig.contentType||"application/json;charset=utf-8",
             pageviewInstance:this.config.$$pageview,
             timeout:this.ajaxConfig.timeout || 7000,
             data:params,
@@ -1052,6 +1049,13 @@ define(["utils","base"],function(utils,baseClass){
     Component.prototype.deleteRowByPrimaryKey=function(key){
 
     }
-
+		Component.prototype.ShowIt=function(){
+			var _this = this;
+      this.$el.removeClass("displaynone");
+		},
+		Component.prototype.HideIt=function(){
+			var _this = this;
+      this.$el.addClass("displaynone");
+		}
     return Component;
 });

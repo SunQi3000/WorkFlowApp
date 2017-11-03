@@ -663,7 +663,8 @@ define(["md5"],
                 };
                 if (config.contentType) {
                     ajaxConfig.contentType = config.contentType;
-                    ajaxConfig.dataType = "json";
+                    //ajaxConfig.dataType = "jsonp";
+                    ajaxConfig.dataType = config.dataType;
                 } else {
                     ajaxConfig.contentType = "application/x-www-form-urlencoded";
                 }

@@ -72,5 +72,15 @@ define(["utils","base"],function(utils,baseClass){
       }
       this.loadingDom.removeClass("displaynone");
     }
+    Component.prototype.show = function(){
+      this.innerText.removeClass("displaynone");
+      this.preTextDom.removeClass("displaynone");
+      this.nextTextDom.removeClass("displaynone");
+    }
+    Component.prototype.hide = function(){
+      this.innerText.addClass("displaynone");
+      this.preTextDom.addClass("displaynone");
+      this.nextTextDom.addClass("displaynone");
+    }
     return Component;
 });

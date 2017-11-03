@@ -451,7 +451,13 @@ define(["utils","base"],function(utils,baseClass){
         this.pluginLoadMoreMethod.call(this.pageview.plugin,this,{});
       }
     }
-
+	Component.prototype.show = function(){
+      
+      this.$el.removeClass("displaynone");
+    }
+    Component.prototype.hide = function(){
+      this.$el.addClass("displaynone");
+    }
     return Component;
 });
 /**
