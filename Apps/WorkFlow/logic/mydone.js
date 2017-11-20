@@ -55,8 +55,7 @@ define([],function(){
         },
         listview_rowclick:function(sender){
             sender.select();            
-            var param={userCode:this.urlParams.userCode,
-            	userName:this.urlParams.userName,
+            var param={userCode:this.urlParams.userCode,            	
             	procedureName:sender.datasource.procedureName,
             	ptype:"mydone"
             };

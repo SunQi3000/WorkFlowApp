@@ -5,8 +5,7 @@ define(["../common/data"], function(DemoData) {
 		this.pageviewInstance = config.pageview;
 		//获取到url参数
 		this.urlParams = this.pageviewInstance.params;
-		this.shParams = this.pageviewInstance.showPageParams;
-		//LoadData(this.pageviewInstance,this.urlParams);
+		this.shParams = this.pageviewInstance.showPageParams;		
 	}
 	pageLogic.prototype = {
 		backIcon_click: function() {
@@ -30,8 +29,12 @@ define(["../common/data"], function(DemoData) {
 			//this.pageviewInstance.ownerPage.plugin.taskActor_value.text=selectedName;
 			
 			this.pageviewInstance.ownerPage.delegate("taskActor_value", function(target) {
-				target.setText(selectedName);
+				target.setValue(selectedName);
 			});
+			this.pageviewInstance.ownerPage.delegate("taskActor_Selected", function(target) {
+				target.setText(selectedCode);
+			});
+			
 			this.pageviewInstance.close();
 		},
 
@@ -70,10 +73,17 @@ define(["../common/data"], function(DemoData) {
 			// }
 		},
 		//列表初始化 保留列表对象的引用
-		listview_init: function(sender) {
+		listview_init: function(sender) {						
+			var taskActorFunc="";
+			if(this.urlParams.workflowfunc == "WorkFlowSend") {				
+				taskActorFunc = "GetWorkFlowSendTaskActor ";
+			}
+			if(this.urlParams.workflowfunc == "WorkFlowBack") {
+				taskActorFunc = "GetWorkFlowBackTaskActor";
+			}
+			sender.ajaxConfig.url=taskActorFunc;
 			this.listview = sender;
-			//this.listview.groupBy("taskActorCode");
-			this.listview.setAjaxConfigParams({
+			this.listview.setAjaxConfigParams({				
 				userCode: this.shParams.userCode,
 				actCode: this.shParams.actCode,
 				routerCode: this.shParams.routerCode,
@@ -112,21 +122,33 @@ define(["../common/data"], function(DemoData) {
 							"selected": UsersList[j].selected
 						});
 					}
-					var testSelect = 'm';
-					if(result.data[i].multiSelect) {
-						testSelect = "s";
-					}
+					/* 测试多条数据
+					var taskActorCode1=taskActorCode+"t";
 					for(var j = 0; j < UsersList.length; j++) {
 						returnObj.push({
-							"id": taskActorCode.toString() + '_' + UsersList[j].userCode.toString(),
-							"taskActorCode": taskActorCode + 't',
-							"taskActorName": taskActorName + 't',
-							"multiSelect": testSelect,
+							"id": taskActorCode1.toString() + '_' + UsersList[j].userCode.toString(),
+							"taskActorCode": taskActorCode1,
+							"taskActorName": taskActorName,
+							"multiSelect": multiSelect,
 							"userCode": UsersList[j].userCode,
 							"userName": UsersList[j].userName,
 							"selected": !UsersList[j].selected
 						});
 					}
+					var taskActorCode2=taskActorCode+"tt";
+					for(var j = 0; j < UsersList.length; j++) {
+						returnObj.push({
+							"id": taskActorCode2.toString() + '_' + UsersList[j].userCode.toString(),
+							"taskActorCode": taskActorCode2,
+							"taskActorName": taskActorName,
+							"multiSelect": multiSelect,
+							"userCode": UsersList[j].userCode,
+							"userName": UsersList[j].userName,
+							"selected": UsersList[j].selected
+						});
+					}
+					*/
+					
 				}
 			}
 			return returnObj;

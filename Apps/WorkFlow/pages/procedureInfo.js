@@ -98,12 +98,30 @@ define(["../logic/procedureInfo"], function(pluginClass) {
 			},
 			page_content: {
 				type: "view",
-				root: ["pdf_view", "listview"],
+				root: ["attachment_view","pdf_view", "listview"],
 				style: {
 					flex: 1,
 					overflowY: "auto",
 					backgroundColor: "#fff"
 				}
+			},
+			attachment_view:{
+				ref:true,
+				type: "view",
+				root: ["attachment_icon"]
+			},
+			attachment_icon: {
+				type: "icon",
+				textPos: "left",
+				style: {
+					flex: 1,
+					justifyContent: "flex-end",
+					paddingRight: 30,
+				},
+				iconStyle:{
+					fontSize: 30,
+				},
+				font: "FontAwesome_f0c6"
 			},
 			pdf_view: {
 				type: "embed",				
@@ -204,8 +222,8 @@ define(["../logic/procedureInfo"], function(pluginClass) {
 			left2: {
 				type: "text",
 				style: {
-					fontSize: 16,
-					color: "#333",
+					fontSize: 13,
+					color: "#8d8d8d",
 
 				},
 				text_bind: "left2"

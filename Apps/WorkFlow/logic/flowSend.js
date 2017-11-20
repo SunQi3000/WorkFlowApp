@@ -3,23 +3,22 @@ define([], function(calendarpicker) {
 		this.pageviewInstance = config.pageview;
 		this.urlParams = this.pageviewInstance.params;
 		this.router_data = [];
-		this.taskActor_data = [];
 
 		this.routerFunc = "";
-		this.taskActorFunc = "";
 		if(this.urlParams.workflowfunc == "WorkFlowSend") {
 			this.routerFunc = "GetWorkFlowSendRouter";
-			this.taskActorFunc = "GetWorkFlowSendTaskActor ";
 		}
 		if(this.urlParams.workflowfunc == "WorkFlowBack") {
 			this.routerFunc = "GetWorkFlowBackRouter";
-			this.taskActorFunc = "GetWorkFlowBackTaskActor";
 		}
 
 	};
 	pageLogic.prototype = {
 		onPageLoad: function() {
 			if(this.urlParams.workflowfunc == "WorkFlowSignIn") {
+				this.pageviewInstance.delegate("pagecontent", function(target) {
+					target.hide();
+				});
 				var sendParams = {
 					userCode: this.urlParams.userCode,
 					actCode: this.urlParams.actCode
@@ -46,12 +45,14 @@ define([], function(calendarpicker) {
 			var sendParams = {
 				userCode: this.urlParams.userCode,
 				actCode: this.urlParams.actCode,
-				userName:this.urlParams.userName,
-				procedureName:this.urlParams.procedureName,
-				ptype:this.urlParams.ptype
+				procedureName: this.urlParams.procedureName,
+				ptype: this.urlParams.ptype
 			};
 			this.pageviewInstance.replaceGo("procedureInfo", sendParams);
 			//this.pageviewInstance.goBack();
+		},
+		taskActor_Selected_init: function(sender) {
+			this.taskActor_Selected = sender;
 		},
 		radiolist_init: function(sender, params) {
 
@@ -70,33 +71,6 @@ define([], function(calendarpicker) {
 		radiolist_selected: function(sender, params) {
 			this.router_value.setText(params.selectedValue[0].label);
 		},
-		checklist_init: function(sender) {
-			this.checklist = sender;
-		},
-		checklist_selected: function(sender, params) {
-			var Re = [];
-			for(var i = 0, j = params.selectedValue.length; i < j; i++) {
-				Re.push(params.selectedValue[i].text);
-			}
-			this.taskActor_value.setText(Re.join(","));
-		},
-		checklist_loaddata: function(sender, params) {
-			var selectedRouter = this.router_value.text;
-			var routerFound = this.router_data.filter(function(item) {
-				return(item.label === selectedRouter);
-			});
-			if(routerFound.length > 0) {
-				var ReRouterCode = routerFound[0].id;
-				GetTaskActorData(this.taskActorFunc, this.pageviewInstance, this.urlParams, ReRouterCode, this.taskActor_data);
-			}
-			var data = this.taskActor_data;
-			var successCallback = params.success;
-			var errorCallback = params.error;
-			window.setTimeout(function() {
-				successCallback(data);
-			}, 1100);
-
-		},
 
 		router_value_didmount: function(sender, params) {
 			this.router_value = sender;
@@ -112,7 +86,28 @@ define([], function(calendarpicker) {
 			this.taskActor_value = sender;
 		},
 		taskActor_value_click: function(sender, params) {
-			this.checklist.show();
+			var ReRouterCode = "";
+			var selectedRouter = this.router_value.text;
+			var routerFound = this.router_data.filter(function(item) {
+				return(item.label === selectedRouter);
+			});
+			if(routerFound.length > 0) {
+				ReRouterCode = routerFound[0].id;
+			}
+			if(ReRouterCode.length == 0) {
+				alert("请先选择流向");
+				return false;
+			}
+			var sh = {
+				pageKey: "selectActor",
+				mode: "fromBottom",
+				params: {
+					userCode: this.urlParams.userCode,
+					actCode: this.urlParams.actCode,
+					routerCode: ReRouterCode
+				}
+			}
+			this.pageviewInstance.showPage(sh);
 		},
 		audit_switch_change: function(sender, params) {
 			var value = params.value;
@@ -124,7 +119,7 @@ define([], function(calendarpicker) {
 		opinion_textarea_init: function(sender, params) {
 			this.opinion_textarea = sender;
 		},
-		
+
 		submitbtn_click: function(sender, params) {
 			var ReRouterCode = "";
 			var ReTaskActors = "";
@@ -137,18 +132,8 @@ define([], function(calendarpicker) {
 			});
 			if(routerFound.length > 0) {
 				ReRouterCode = routerFound[0].id;
-				var strActors = this.taskActor_value.text;
-
-				for(var i = 0; i < this.taskActor_data.length; i++) {
-					var dd = this.taskActor_data[i];
-					if(strActors.indexOf(dd.text) >= 0) {
-						if(ReTaskActors.length > 0) {
-							ReTaskActors += ";";
-						}
-						ReTaskActors += dd.userCode + "," + dd.taskActorCode;
-					}
-				}
 			}
+			ReTaskActors = this.taskActor_Selected.getText();
 
 			if(this.audit_switch.value) {
 				ReAuditValue = "Approve";
@@ -169,6 +154,7 @@ define([], function(calendarpicker) {
 			if(this.urlParams.workflowfunc == "WorkFlowFinish" || this.urlParams.workflowfunc == "WorkFlowTaskFinish") {
 				if(ReOpinion == "") {
 					alert("请填写处理意见");
+					return false;
 				}
 				sendParams = {
 					userCode: this.urlParams.userCode,
@@ -180,12 +166,15 @@ define([], function(calendarpicker) {
 			if(this.urlParams.workflowfunc == "WorkFlowSend" || this.urlParams.workflowfunc == "WorkFlowBack") {
 				if(ReRouterCode == "") {
 					alert("请选择流向");
+					return false;
 				}
 				if(ReTaskActors == "") {
 					alert("请选择处理人");
+					return false;
 				}
 				if(ReOpinion == "") {
 					alert("请填写处理意见");
+					return false;
 				}
 
 				sendParams = {
@@ -203,31 +192,7 @@ define([], function(calendarpicker) {
 			//todo: 提交等待?
 			//Submit(this.urlParams, sendParams, this.pageviewInstance);
 		},
-		selectbtn_click: function(sender, params) {
-			var ReRouterCode="";
-			var selectedRouter = this.router_value.text;
-			var routerFound = this.router_data.filter(function(item) {
-				return(item.label === selectedRouter);
-			});
-			if(routerFound.length > 0) {
-				ReRouterCode = routerFound[0].id;
-			}
-			var sh={
-				    pageKey:"selectActor",
-				    mode:"fromBottom",
-				    params:{
-				    	userCode: this.urlParams.userCode,
-						actCode: this.urlParams.actCode,
-						routerCode: ReRouterCode		
-				    }
-				}
-			this.pageviewInstance.showPage(sh);
-			/*this.pageviewInstance.go("selectActor",{
-				    	userCode: this.urlParams.userCode,
-						actCode: this.urlParams.actCode,
-						routerCode: ReRouterCode		
-				    });*/
-		}
+		
 	};
 
 	//获取流向
@@ -258,43 +223,6 @@ define([], function(calendarpicker) {
 		sender.ajax(sendParams);
 	};
 
-	//获取处理人
-	function GetTaskActorData(urlFunction, sender, params, routerId, returnObj) {
-		var sendParams = {
-			url: urlFunction,
-			dataType: 'jsonp',
-			contentType: "application/json;charset=utf-8",
-			type: 'post',
-			data: {
-				userCode: params.userCode,
-				actCode: params.actCode,
-				routerCode: routerId,
-			},
-			success: function(data) {
-				if(data.result) {
-					returnObj.splice(0, returnObj.length);
-					for(var i = 0; i < data.data.length; i++) {
-						for(var j = 0; j < data.data[i].users.length; j++) {
-							var actorName = data.data[i].users[j].userName;
-							if(data.data[i].taskActorName) {
-								actorName += '(' + data.data[i].taskActorName + ')';
-							}
-							returnObj.push({
-								"id": i.toString() + '_' + j.toString(),
-								"taskActorCode": data.data[i].taskActorCode,
-								"userCode": data.data[i].users[j].userCode,
-								"text": actorName
-							});
-						}
-					}
-				} else {
-					alert(data.msg);
-				}
-			},
-		};
-		sender.ajax(sendParams);
-	};
-
 	//提交事件
 	function Submit(urlpm, params, sender) {
 		var sendParams = {
@@ -308,16 +236,22 @@ define([], function(calendarpicker) {
 					sender.replaceGo("procedureInfo", {
 						userCode: urlpm.userCode,
 						actCode: urlpm.actCode,
-						userName:urlpm.userName,
-						procedureName:urlpm.procedureName,
-						ptype:urlpm.ptype
+						procedureName: urlpm.procedureName,
+						ptype: urlpm.ptype
 					});
 				} else {
 					alert(data.msg);
 				}
+				sender.hideLoading(true);
+			},
+			error: function(data) {
+				_this.pageviewInstance.hideLoading(true);
 			}
 		};
 		sender.ajax(sendParams);
+		sender.showLoading({
+			text: "正在处理中..."
+		});
 	};
 
 	return pageLogic;

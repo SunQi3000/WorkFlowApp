@@ -40,3 +40,6 @@ margin-left: 0 !important;
 transform: scaleY(1) !important;
 
 }
+.yy-swith-selected {
+    background-color: #F38236;
+}

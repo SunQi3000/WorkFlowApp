@@ -95,8 +95,8 @@ define(["../logic/seemore"], function(pluginClass) {
 				style: {
 					marginLeft: "8px",
 					color: "#8899a6",
-					fontSize: "14px"
-				},
+					fontSize: "16px"
+				},				
 				textStyle:{
 					color: "#000",
 				}
@@ -157,7 +157,7 @@ define(["../logic/seemore"], function(pluginClass) {
 				textStyle: {
 					marginLeft: "8px",
 					color: "#8899a6",
-					fontSize: "14px"
+					fontSize: "16px"
 				},
 				textPos: "right",
 				style: {

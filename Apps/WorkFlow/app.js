@@ -1,8 +1,7 @@
 define(["utils"], function(utils) {
     return {
         init: function(PM) {
-            PM.start({
-            	host11: "http://123.103.9.201:4031/workflowwebservice55/query.asmx",
+            PM.start({            	
                 host: "http://10.23.71.57/workflowwebservice55/query.asmx",
                 helppdf: "http://10.23.71.57/workflowwebservice55/pdfjs/web/viewer.html?file=V60WorkFlow-help.pdf",                
                 root: "index",
@@ -30,6 +29,10 @@ define(["utils"], function(utils) {
                 },
                 onAjaxResponse: function(params) {
                 	//ajax的响应的全局捕获机制
+                	/*if(!params.isSuccess){
+                		alert(params.data.msg);
+                	}*/
+                	
                 },
                 routerChange: function(arg) {
                 	//页面路由的全局捕获机制

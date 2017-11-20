@@ -59,6 +59,7 @@ define(["../logic/index"], function(pluginClass) {
                 root: ["btn_submit"]
             },
             txt_username:{
+              ref:true,
               type:"input",
               style:{
               	margin:"1px auto",

@@ -111,10 +111,10 @@ define(["../logic/procedureList"], function(pluginClass) {
 					url: "GetWorkFlowActListSigned",
 					type: "GET",
 					dataType: "jsonp",
-					pageSize: 99999,
-					pageNumKey: "pageNum",
+					pageSize: 5,
+					pageNumKey: "page",
 					data: {
-						pageSize: 99999
+						pageSize: 5
 					},
 				},
 				style: {

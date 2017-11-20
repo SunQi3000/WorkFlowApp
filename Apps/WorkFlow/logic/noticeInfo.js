@@ -52,6 +52,7 @@ define([],function(){
 				},
 			};
 			this.pageviewInstance.ajax(params);
+			
 		},
         
     };
@@ -86,9 +87,13 @@ define([],function(){
 					} else {
 						alert(data.msg);
 					}
+					sender.hideLoading(true);
 				},
 			};
-			sender.ajax(sendParams);    
+			sender.ajax(sendParams);
+			sender.showLoading({
+				text: "正在加载"
+			});
     };
     return pageLogic;
 });

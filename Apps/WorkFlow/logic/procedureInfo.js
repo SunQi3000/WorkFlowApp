@@ -5,7 +5,7 @@ define([], function() {
 		this.urlParams = this.pageviewInstance.params;
 		this.selectedSeg = "业务信息";
 		this.pdfFileUrl = "";
-		this.auditResult="0";//流程审批结果的显示项目:0-visible false,1-Approve&Reject
+		this.auditResult = "0"; //流程审批结果的显示项目:0-visible false,1-Approve&Reject
 
 		//var params ={userCode: "100000",actCode:"114024"};  
 
@@ -39,6 +39,11 @@ define([], function() {
 			icon: "FontAwesome_f112",
 			color: "rgb(252,116,122)"
 		};
+		
+		//todo：无法显示各种类型文件的附件，隐去该功能
+		this.pageviewInstance.delegate("attachment_view", function(target) {
+					target.hide();
+				});
 	}
 
 	function LoadData(sender) {
@@ -57,22 +62,30 @@ define([], function() {
 				} else {
 					alert(data.msg);
 				}
+				sender.pageviewInstance.hideLoading(true);
 			},
+			error: function(data) {
+				_this.pageviewInstance.hideLoading(true);
+			}
 		};
 		sender.pageviewInstance.ajax(sendParams);
+		sender.pageviewInstance.showLoading({
+			text: "正在加载"
+		});
 	};
+	
 	pageLogic.prototype = {
 		onPageLoad: function() {
 			LoadData(this);
 		},
 		backIcon_click: function(sender, params) {
 			//this.pageviewInstance.goBack();
-			var param={userCode:this.urlParams.userCode,
-            	userName:this.urlParams.userName,
-				procedureName:this.urlParams.procedureName,
-				ptype:this.urlParams.ptype
-           };            
-		    this.pageviewInstance.replaceGo("procedureList",param);
+			var param = {
+				userCode: this.urlParams.userCode,
+				procedureName: this.urlParams.procedureName,
+				ptype: this.urlParams.ptype
+			};
+			this.pageviewInstance.replaceGo("procedureList", param);
 		},
 		header_title_init: function(sender, params) {
 			this.header_title = sender;
@@ -94,9 +107,8 @@ define([], function() {
 				actCode: this.urlParams.actCode,
 				auditSwitch: this.auditResult,
 				workflowfunc: sender.datasource.func,
-				userName:this.urlParams.userName,
-				procedureName:this.urlParams.procedureName,
-				ptype:this.urlParams.ptype
+				procedureName: this.urlParams.procedureName,
+				ptype: this.urlParams.ptype
 			};
 			this.pageviewInstance.replaceGo("flowSend", param);
 			this.poplayer.hide();
@@ -107,7 +119,10 @@ define([], function() {
 		pdf_view_init: function(sender, params) {
 			this.pdf_view = sender;
 		},
-
+		
+		attachment_view_init: function(sender, params) {
+			this.attachment_view = sender;
+		},
 		segment_item_init: function(sender, params) {
 			//alert(sender.datasource.title);
 			sender.config.text = sender.datasource.title;
@@ -155,15 +170,15 @@ define([], function() {
 			if(!result.result) {
 				return false;
 			}
-			var au=result.data.auditResult;
-			if(au.visible){				
-				if(au.items.length>0){					
-					this.auditResult="1";
+			var au = result.data.auditResult;
+			if(au.visible) {
+				if(au.items.length > 0) {
+					this.auditResult = "1";
 				}
-			}else{
-				this.auditResult="0";
+			} else {
+				this.auditResult = "0";
 			}
-			
+
 			var tt = result.data.toolbar;
 			var items = [];
 			/*items.push(this.Button_signIn);
@@ -230,15 +245,23 @@ define([], function() {
 			this.selectedSeg = params.item.datasource.title;
 
 			if(this.selectedSeg == "业务信息") {
+				//this.attachment_view.show();
 				this.pdf_view.ShowIt();
 				this.listview.HideIt();
 			} else {
+				//this.attachment_view.hide();
 				this.pdf_view.HideIt();
 				this.listview.ShowIt();
 				this.listview.empty();
 				this.page_content_reload();
 			}
 
+		},
+		attachment_icon_click:function(sender, params) {
+			var param = {				
+				actCode: this.urlParams.actCode
+			};
+			this.pageviewInstance.go("attachmentList", param);
 		}
 	};
 	return pageLogic;

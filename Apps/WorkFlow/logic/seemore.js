@@ -2,7 +2,7 @@ define([],function(){
     function pageLogic(config){
         this.pageviewInstance = config.pageview;
         this.urlParams = this.pageviewInstance.params;
-        this.userName=decodeURI(this.urlParams.userName);
+        this.userName=localStorage.getItem("userName");//decodeURI(this.urlParams.userName);
         
     }
     pageLogic.prototype = {
@@ -21,6 +21,7 @@ define([],function(){
          	this.pageviewInstance.go("versionInfo");
          }
          if(title=="注销"){
+         	localStorage.clear();
          	this.pageviewInstance.go("index");
          }
         },

@@ -12,16 +12,18 @@ define(["../logic/selectActor"],function(pluginClass){
                 style:{
                     height:"44px",
                     borderBottom:"1px solid #e2e8ed",
-                    backgroundColor:"#fff",
+                    backgroundColor:"#F38236",
                     justifyContent:"center",
                     alignItems:"center"
                 }
             },
             header_title:{
                 type:"text",
-                text:"多选",
+                text:"选择处理人",
                 style:{
-                  fontSize:14
+                  fontSize:17,
+                  fontWeight:"bold",
+                  color:"#fff"
                 }
             },
             header_right_text:{
@@ -32,30 +34,31 @@ define(["../logic/selectActor"],function(pluginClass){
                     right:10,
                     top:12,
                     fontSize:14,
-                    color:"rgb(0, 147, 255)"
+                    color:"#fff"
                 },
-                preText:"已选(",
-                nextText:")项",
+                preText:"确定(",
+                nextText:")",
                 textStyle:{
-                    color:"gray"
+                    color:"#fff"
                 },
                 text:"0"
             },
             
             backIcon:{
-              type:"icon",
-              text:"返回",
-              style:{
-                position: "absolute",
-                left: "0px",
-                color: "rgb(0, 147, 255)",
-                top: "7px",
-                width: "50px",
-                height: "30px",
-              },
-              textStyle: {
-                fontSize: "14px"
-              }
+              type: "icon",
+				text: "",
+				font: "FontAwesome_f0a8",
+				style: {
+					position: "absolute",
+					left: "0px",
+					color: "#fff",
+					top: "7px",
+					width: "50px",
+					height: "30px",
+				},
+				iconStyle: {
+					fontSize: "25px",
+				}
             },
             page_content:{
                 type:"view",
@@ -73,7 +76,7 @@ define(["../logic/selectActor"],function(pluginClass){
               groupKey:"taskActorCode",
               groupHeader:["row_groupHeader"],
               ajaxConfig:{
-                  url:"GetWorkFlowSendTaskActor",
+                  url:"",
                   type: "GET",
 				  dataType: "jsonp",
                   pageSize:99999,
@@ -84,13 +87,19 @@ define(["../logic/selectActor"],function(pluginClass){
               },
               style:{
                 flexDirection:'column',
-                paddingLeft:8,
+               
               },
               rowStyle:{
-                paddingTop:15,
-                paddingBottom:15,
+              	paddingLeft:8,
+                paddingTop:5,
+                paddingBottom:5,
                 borderBottom:"1px solid #eee",
                 flexDirection:'column'
+              },
+              groupHeaderStyle:{
+              	paddingTop:5,
+                paddingBottom:5,
+              	backgroundColor:"#f1f1f1"
               }
             },
 
@@ -127,7 +136,9 @@ define(["../logic/selectActor"],function(pluginClass){
                 style:{
                     fontSize:17,
                     fontWeight:"bold",
-                    color:"#333",                    
+                    color:"#333",
+                    paddingLeft:10,
+                    paddingBottom:5,
                 },
                 text_bind:"taskActorName"
             }

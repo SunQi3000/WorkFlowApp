@@ -88,7 +88,7 @@ define(["../logic/versionInfo"],function(pluginClass){
                 text: "",
                 ref: true,
 				style: {
-					fontSize: 13,
+					fontSize: 17,
 					color: "#000"
 				},
             },
@@ -97,7 +97,7 @@ define(["../logic/versionInfo"],function(pluginClass){
                 text: "",
                 ref: true,
 				style: {
-					fontSize: 13,
+					fontSize: 17,
 					color: "#000",
 					paddingBottom:10
 				},
@@ -107,7 +107,7 @@ define(["../logic/versionInfo"],function(pluginClass){
                 text: "",
                 ref: true,
 				style: {
-					fontSize: 13,
+					fontSize: 16,
 					color: "#000"
 				},
             },
