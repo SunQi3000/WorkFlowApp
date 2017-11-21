@@ -7,7 +7,7 @@ define([],function(){
 		var pdfUrl = appconfig.helppdf;	
 		//this.pdf_view.setSrc(pdfUrl);
 		var appName="房地产专业版移动审批";
-        var appVersion="版本 1.0.0";
+        var appVersion="版本 2.0.0";
         var appInfo="房地产专业版移动审批 软件®2017 所有 知识产权由 用友网络科技股份有限公司（ yonyou Network Technology Co., Ltd）拥有。";
 		this.pageviewInstance.delegate("txt_title",function(target){    		 
             target.setText(appName);

@@ -230,9 +230,9 @@ define([], function() {
 			}
 
 			//alert(JSON.stringify(sendParams));
-			this.opinion_textarea.setValue(JSON.stringify(sendParams));
+			//this.opinion_textarea.setValue(JSON.stringify(sendParams));
 			//todo: 提交等待?
-			//Submit(this.urlParams, sendParams, this.pageviewInstance);
+			Submit(this.urlParams, sendParams, this.pageviewInstance);
 		},
 		
 	};

@@ -1,6 +1,6 @@
 {
   "name": "yonyou-workflow",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "This project  is for auditing the procedures in workflow. It apply to the System of UF ERP- real estate v6.0 .",
   "main": "app.js",
   "scripts": {
