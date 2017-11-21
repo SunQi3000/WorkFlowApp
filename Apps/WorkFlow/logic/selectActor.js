@@ -1,40 +1,51 @@
-define(["../common/data"], function(DemoData) {
+define([], function() {
 	var actorData = {};
+	var tipConfigs=[{
+      text:"当前流程角色成员为单选!",
+      withoutBackCover:true,
+      duration:1000,
+      style:{      	
+        width:200
+      },
+      textStyle:{
+      	fontSize:15
+      }
+    }];
 
 	function pageLogic(config) {
 		this.pageviewInstance = config.pageview;
 		//获取到url参数
 		this.urlParams = this.pageviewInstance.params;
-		this.shParams = this.pageviewInstance.showPageParams;		
+		this.shParams = this.pageviewInstance.showPageParams;
 	}
 	pageLogic.prototype = {
 		backIcon_click: function() {
 			this.pageviewInstance.goBack();
 		},
-		header_right_text_click:function() {
-			var selectedRows=this.listview.selectedRows;			
-			var selectedName="";
-			var selectedCode="";
-			for(var i=0;i<selectedRows.length;i++){
-				var rowdata=selectedRows[i].datasource;
-				if(selectedName.length>0){
-					selectedName+=";";
+		header_right_text_click: function() {
+			var selectedRows = this.listview.selectedRows;
+			var selectedName = "";
+			var selectedCode = "";
+			for(var i = 0; i < selectedRows.length; i++) {
+				var rowdata = selectedRows[i].datasource;
+				if(selectedName.length > 0) {
+					selectedName += ";";
 				}
-				selectedName+=rowdata.userName+"("+rowdata.taskActorName+")";
-				if(selectedCode.length>0){
-					selectedCode+=";";
+				selectedName += rowdata.userName + "(" + rowdata.taskActorName + ")";
+				if(selectedCode.length > 0) {
+					selectedCode += ";";
 				}
-				selectedCode+=rowdata.userCode+","+rowdata.taskActorCode;				
+				selectedCode += rowdata.userCode + "," + rowdata.taskActorCode;
 			}
 			//this.pageviewInstance.ownerPage.plugin.taskActor_value.text=selectedName;
-			
+
 			this.pageviewInstance.ownerPage.delegate("taskActor_value", function(target) {
 				target.setValue(selectedName);
 			});
 			this.pageviewInstance.ownerPage.delegate("taskActor_Selected", function(target) {
 				target.setText(selectedCode);
 			});
-			
+
 			this.pageviewInstance.close();
 		},
 
@@ -73,17 +84,17 @@ define(["../common/data"], function(DemoData) {
 			// }
 		},
 		//列表初始化 保留列表对象的引用
-		listview_init: function(sender) {						
-			var taskActorFunc="";
-			if(this.urlParams.workflowfunc == "WorkFlowSend") {				
+		listview_init: function(sender) {
+			var taskActorFunc = "";
+			if(this.urlParams.workflowfunc == "WorkFlowSend") {
 				taskActorFunc = "GetWorkFlowSendTaskActor ";
 			}
 			if(this.urlParams.workflowfunc == "WorkFlowBack") {
 				taskActorFunc = "GetWorkFlowBackTaskActor";
 			}
-			sender.ajaxConfig.url=taskActorFunc;
+			sender.ajaxConfig.url = taskActorFunc;
 			this.listview = sender;
-			this.listview.setAjaxConfigParams({				
+			this.listview.setAjaxConfigParams({
 				userCode: this.shParams.userCode,
 				actCode: this.shParams.actCode,
 				routerCode: this.shParams.routerCode,
@@ -119,7 +130,8 @@ define(["../common/data"], function(DemoData) {
 							"multiSelect": multiSelect,
 							"userCode": UsersList[j].userCode,
 							"userName": UsersList[j].userName,
-							"selected": UsersList[j].selected
+							"selected": UsersList[j].selected,
+							"firstPinyin": UsersList[j].firstPinyin
 						});
 					}
 					/* 测试多条数据
@@ -148,11 +160,24 @@ define(["../common/data"], function(DemoData) {
 						});
 					}
 					*/
-					
+
 				}
 			}
-			return returnObj;
+
+			if(this.search_bar) {
+				var searchstr = this.search_bar.value();
+				if(searchstr.length > 0) {
+					var found = returnObj.filter(function(item) {
+						return(item.userName.indexOf(searchstr) >= 0);
+					});
+					return found.sort(sortByProperty("firstPinyin", "asc"));
+				}
+			}
+
+			return returnObj.sort(sortByProperty("firstPinyin", "asc"));
+
 		},
+
 		listview_rowclick: function(sender) {
 
 			var canSelect = true;
@@ -167,24 +192,54 @@ define(["../common/data"], function(DemoData) {
 				});
 				if(found.length > 0) {
 					canSelect = false;
+					if(found.length == 1) {
+						if(found[0].datasource.id == sender.datasource.id) {
+							canSelect = true;
+						}
+					}
+					if(!canSelect) {
+						this.pageviewInstance.showTip(tipConfigs[0]);
+					}
+
 				} else {
 					canSelect = true;
 				}
-				if(found.length==1){
-					if(found[0].datasource.id==sender.datasource.id){
-						canSelect = true;
-					}
-					
-				}
+
 			}
 			if(canSelect) {
 				sender.select();
-			}			
+			}
 			this.pageviewInstance.delegate("header_right_text", function(target) {
 				target.setText(listObj.selectedRows.length);
 			});
 		},
+
+		search_bar_init: function(sender, params) {
+			this.search_bar = sender;
+		},
+		search_bar_change: function(sender, params) {
+			this.listview.empty();
+			this.listview.reload();
+		}
+
 	};
 
+	function sortByProperty(property, sortup) {
+		return function(a, b) {
+			var sortflag = 1;
+			if(sortup === "desc") {
+				sortflag = -1;
+			}
+			var value1 = a[property];
+			var value2 = b[property];
+			if(value2 < value1) {
+				return sortflag;
+			} else if(value2 > value1) {
+				return(0 - sortflag);
+			} else {
+				return 0;
+			}
+		}
+	};
 	return pageLogic;
 });

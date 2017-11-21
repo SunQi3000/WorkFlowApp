@@ -3,6 +3,7 @@ define([], function() {
 	function pageLogic(config) {
 		this.pageviewInstance = config.pageview;
 		this.urlParams = this.pageviewInstance.params;
+		this.userCode=localStorage.getItem("userCode");
 		this.selectedSeg = "业务信息";
 		this.pdfFileUrl = "";
 		this.auditResult = "0"; //流程审批结果的显示项目:0-visible false,1-Approve&Reject
@@ -53,7 +54,7 @@ define([], function() {
 			contentType: "application/json;charset=utf-8",
 			type: 'post',
 			data: {
-				userCode: sender.urlParams.userCode,
+				userCode: sender.userCode,
 				actCode: sender.urlParams.actCode
 			},
 			success: function(data) {
@@ -80,9 +81,7 @@ define([], function() {
 		},
 		backIcon_click: function(sender, params) {
 			//this.pageviewInstance.goBack();
-			var param = {
-				userCode: this.urlParams.userCode,
-				procedureName: this.urlParams.procedureName,
+			var param = {				
 				ptype: this.urlParams.ptype
 			};
 			this.pageviewInstance.replaceGo("procedureList", param);
@@ -102,12 +101,10 @@ define([], function() {
 		},
 		shareRepeat_itemclick: function(sender, params) {
 
-			var param = {
-				userCode: this.urlParams.userCode,
+			var param = {				
 				actCode: this.urlParams.actCode,
 				auditSwitch: this.auditResult,
-				workflowfunc: sender.datasource.func,
-				procedureName: this.urlParams.procedureName,
+				workflowfunc: sender.datasource.func,				
 				ptype: this.urlParams.ptype
 			};
 			this.pageviewInstance.replaceGo("flowSend", param);

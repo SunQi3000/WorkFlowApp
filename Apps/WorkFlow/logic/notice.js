@@ -3,6 +3,7 @@ define([],function(){
         this.pageviewInstance = config.pageview;
         //获取到url参数
         this.urlParams = this.pageviewInstance.params;
+        this.userCode=localStorage.getItem("userCode");
     }
     pageLogic.prototype = {
         // right_icon_didmount:function(sender){
@@ -32,7 +33,7 @@ define([],function(){
         //列表初始化 保留列表对象的引用
         listview_init:function(sender){
             this.listview = sender;
-            this.listview.setAjaxConfigParams({userCode:this.urlParams.userCode,page:'1',pageCount:'20'});
+            this.listview.setAjaxConfigParams({userCode:this.userCode,page:'1',pageCount:'20'});
         },
         
         //列表实例话完成后 调用开始加载数据
@@ -50,7 +51,7 @@ define([],function(){
         },
         listview_rowclick:function(sender){
             sender.select();            
-            var param={userCode:this.urlParams.userCode,
+            var param={
             	noticeId:sender.datasource.noticeCode
             };
             this.pageviewInstance.go("noticeInfo",param);

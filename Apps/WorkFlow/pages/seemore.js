@@ -107,7 +107,7 @@ define(["../logic/seemore"], function(pluginClass) {
 				className: "demo-repeat-2",
 				root: ["repeat_icon", "rp_right_icon"],
 				items: [{
-						label: "<a href='mailto:sunqib@yonyou.com' style='text-decoration:none;color: #8899a6;'>问题与意见</a>",
+						label: "<a href='mailto:' style='text-decoration:none;color: #8899a6;'>问题与意见</a>",
 						icon: "FontAwesome_f199"
 					},
 					{

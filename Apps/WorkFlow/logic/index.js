@@ -11,13 +11,14 @@ define(["utils"], function(utils) {
 		}else{
 		 //alert('This browser does NOT support localStorage');
 		}
+		
 		if(userId.length>0){
 			this.pageviewInstance.delegate("txt_username", function(target) {
 			target.setValue(userId);
 		});
 		}else{
 			this.pageviewInstance.delegate("txt_username", function(target) {
-			target.focus();
+			target.focus();//focus 不起作用？？？
 		});
 		}
 		
@@ -32,6 +33,7 @@ define(["utils"], function(utils) {
 		txt_password_init: function(sender, params) {
 			this.txt_password = sender;
 		},
+		
 		btn_submit_click: function(sender, params) {
 			//alert("aa");
 			var params = {
@@ -51,20 +53,21 @@ define(["utils"], function(utils) {
 						localStorage.setItem("userCode",data.data.userCode);
 						localStorage.setItem("userId",data.data.userId);
 						localStorage.setItem("userName",data.data.userName);
-						this.pageviewInstance.go("mainpage", {
-							userCode: data.data.userCode							
-						});
+						this.pageviewInstance.go("mainpage");
+						
 					} else {
-						alert(data.msg);
-						this.pageviewInstance.go("mainpage", {
-							userCode: "100000"
+						
+						this.pageviewInstance.delegate("txt_message", function(target) {
+							target.setText(data.msg);
 						});
+						//alert(data.msg);						
 					}
-					_this.pageviewInstance.hideLoading(true);
+					this.pageviewInstance.hideLoading(true);
+					
 				},
 				error: function(data) {	
 					alert("服务器连接失败");
-					_this.pageviewInstance.hideLoading(true);
+					this.pageviewInstance.hideLoading(true);
 					
 				}
 

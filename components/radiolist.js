@@ -15,7 +15,7 @@ define(["utils","base"],function(utils,baseClass){
         console.error("radiolist控件primaryKey属性 错误的数据类型");
       }
       // this.itemData["$$selectedkey"] = this.key;
-      this.$el = $("<div data-key='"+this.key+"' class='yy-radiolist-item yy-icommon' style='height:"+config.parent.itemHeight+"px;line-height:"+config.parent.itemHeight+"px;font-size:"+utils.fontSize13()+"px'>"+(config.itemData[config.parent.labelKey]||"")+"</div>");
+      this.$el = $("<div data-key='"+this.key+"' class='yy-radiolist-item yy-icommon' style='height:"+config.parent.itemHeight+"px;line-height:"+config.parent.itemHeight+"px;font-size:"+config.parent.itemFontSize+"px'>"+(config.itemData[config.parent.labelKey]||"")+"</div>");
     };
 
     Item.prototype = {
@@ -32,6 +32,7 @@ define(["utils","base"],function(utils,baseClass){
         Component.baseConstructor.call(this,config);
         var labelHeight = utils.getRealHeight("36");
         this.itemHeight = utils.getRealHeight("48");
+        this.itemFontSize= this.config.itemFontSize||utils.fontSize13();
         this.$el.addClass("yy-checklist");
         this.items = [];
         this.selectedValue = this.config.selectedValue||[];

@@ -9,7 +9,8 @@ define(["../logic/flowSend"], function(pluginClass) {
 			radiolist: {
 				type: "radiolist",
 				primaryKey: "id",
-				labelKey: "label"
+				labelKey: "label",
+				itemFontSize:17
 			},
 			taskActor_Selected: {
 				ref: true,

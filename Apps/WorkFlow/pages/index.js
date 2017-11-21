@@ -47,7 +47,7 @@ define(["../logic/index"], function(pluginClass) {
                     height:120,
                     border:"2px solid #dddddd",
                 },
-                root: ["txt_username","txt_password"]
+                root: ["txt_username","txt_password","message_view"]
             },
             view_button: {
                 type: "view",
@@ -86,6 +86,27 @@ define(["../logic/index"], function(pluginClass) {
                 border:"1px solid #eee",
               },
               placeholder:"请输入密码"
+            },
+            message_view:{
+            	type:"view",
+            	root:["txt_message"],
+            	style: {
+					margin:"5px auto", 
+					height:40,
+                	width:250,
+                	paddingLeft:10,
+                    paddingRight:10,
+				}        	
+            },
+            txt_message:{
+            	ref:true,
+            	type: "text",
+            	text:"",
+				style: {					
+					fontSize:14,
+					color: "red"
+					
+				}        	
             },
             btn_submit:{
               type:"button",

@@ -3,7 +3,8 @@ define(["../js/func"], function() {
 		this.pageviewInstance = config.pageview;
 		//获取到url参数
 		this.urlParams = this.pageviewInstance.params;
-		this.procedureName = decodeURI(this.urlParams.procedureName);
+		this.userCode=localStorage.getItem("userCode");
+		this.procedureName = localStorage.getItem("procedureName");
 
 		this.selectedSeg = "今日";
 		var strToday = getDate(); //当日 
@@ -33,7 +34,7 @@ define(["../js/func"], function() {
 		},
 		backIcon_click: function(sender, params) {
 			//this.pageviewInstance.goBack();
-			var param={userCode:this.urlParams.userCode,            	
+			var param={           	
             	$$pn:this.urlParams.ptype
             };
 		    this.pageviewInstance.replaceGo("mainpage",param);
@@ -73,8 +74,8 @@ define(["../js/func"], function() {
 				funcname="GetWorkFlowActListDonePaged"//取已办
 			}
 			var fre = {
-				userCode: this.urlParams.userCode,
-				procedureName: decodeURI(this.urlParams.procedureName),
+				userCode: this.userCode,
+				procedureName: this.procedureName,
 				beginDate:this.strTodayTimeStart,
 				endDate:this.strTodayTimeEnd,
 				page:1,
@@ -91,44 +92,19 @@ define(["../js/func"], function() {
 		//列表返回数据的时候 如果获取成功则返回数据中的数组
 		//失败的时候则直接return false;界面会显示重新加载的界面
 		listview_parsedata: function(sender, params) {
-			/*
-			var strToday = getDate(); //当日 		
-			var strMonday = getMonday('s', 0);
-			var strSunday = getMonday('e', 0);
-			var strTodayTimeStart = strToday + " 00:00:00";
-			var strTodayTimeEnd = strToday + " 23:59:59";
-			var strMondayTimeStart = strMonday + " 00:00:00";
-			var strSundayTimeEnd = strSunday + " 23:59:59";
-			*/
+			
 			var result = params.data;
 			if(!result.result) {
 				return false;
 			}
-			/*
-			if(this.selectedSeg == "今日") {
-				result.data = result.data.filter(function(item) {
-					return(item.fromDate >= strTodayTimeStart && item.fromDate <= strTodayTimeEnd);
-				});
-			}
-			if(this.selectedSeg == "本周") {
-				result.data = result.data.filter(function(item) {
-					return(item.fromDate >= strMondayTimeStart && item.fromDate <= strSundayTimeEnd);
-				});
-			}
-			if(this.selectedSeg == "更早") {
-				result.data = result.data.filter(function(item) {
-					return item.fromDate < strMondayTimeStart;
-				});
-			}*/
+			
 			return result.data.listdata;
 		},
 		listview_rowclick: function(sender) {
 			sender.select();
-			//alert("ddd");
-			var param = {
-				userCode: this.urlParams.userCode,
-				actCode: sender.datasource.actCode,
-				procedureName:this.urlParams.procedureName,
+			
+			var param = {				
+				actCode: sender.datasource.actCode,				
 				ptype:this.urlParams.ptype
 			};
 			this.pageviewInstance.replaceGo("procedureInfo",param);

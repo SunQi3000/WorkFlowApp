@@ -62,12 +62,24 @@ define(["../logic/selectActor"],function(pluginClass){
             },
             page_content:{
                 type:"view",
-                root:["listview"],
+                root:["search_view","listview"],
                 style:{
                   flex:1,
                   overflowY:"auto",
-                  backgroundColor:"#fff"
+                  backgroundColor:"#f1f1f1"
                 }
+            },
+            search_view:{
+            	type:"view",
+            	root:["search_bar"],
+            	style:{                  
+                 paddingLeft:8,
+                 backgroundColor:"#fff",
+                 display:"none"
+                }
+            },
+            search_bar:{
+            	type:"searchview",            	
             },
             listview:{
               type:"listview",
@@ -86,8 +98,7 @@ define(["../logic/selectActor"],function(pluginClass){
                 },
               },
               style:{
-                flexDirection:'column',
-               
+                flexDirection:'column',               
               },
               rowStyle:{
               	paddingLeft:8,
@@ -99,14 +110,15 @@ define(["../logic/selectActor"],function(pluginClass){
               groupHeaderStyle:{
               	paddingTop:5,
                 paddingBottom:5,
-              	backgroundColor:"#f1f1f1"
+              	backgroundColor:"#a9b4bc"
               }
             },
 
             row_wrap:{
                 type:"view",
                 style:{
-                    flexDirection:"row"
+                    flexDirection:"row",
+                    height:33
                 },
                 root:["row_checkicon","row_name"]
             },
@@ -125,7 +137,8 @@ define(["../logic/selectActor"],function(pluginClass){
             row_name:{
                 type:"text",
                 style:{
-                    fontSize:13,
+                    fontSize:15,
+                    fontWeight:"bold",
                     color:"#333",
                     flex:1
                 },
@@ -136,7 +149,7 @@ define(["../logic/selectActor"],function(pluginClass){
                 style:{
                     fontSize:17,
                     fontWeight:"bold",
-                    color:"#333",
+                    color:"#fff",
                     paddingLeft:10,
                     paddingBottom:5,
                 },

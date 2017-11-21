@@ -3,6 +3,7 @@ define([],function(){
         this.pageviewInstance = config.pageview;
         //获取到url参数
         this.urlParams = this.pageviewInstance.params;
+        this.userCode=localStorage.getItem("userCode");
         
     }
     pageLogic.prototype = {
@@ -37,7 +38,7 @@ define([],function(){
         //列表初始化 保留列表对象的引用
         listview_init:function(sender){
             this.listview = sender;
-            this.listview.setAjaxConfigParams({userCode:this.urlParams.userCode});
+            this.listview.setAjaxConfigParams({userCode:this.userCode});
         },
         
         //列表实例话完成后 调用开始加载数据
@@ -54,9 +55,9 @@ define([],function(){
             return result.data;
         },
         listview_rowclick:function(sender){
-            sender.select();            
-            var param={userCode:this.urlParams.userCode,
-            	procedureName:sender.datasource.procedureName,
+            sender.select();
+             localStorage.setItem("procedureName",sender.datasource.procedureName);
+            var param={
             	ptype:"mytodo"
             };
             this.pageviewInstance.replaceGo("procedureList",param);

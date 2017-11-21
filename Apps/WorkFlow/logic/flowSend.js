@@ -1,7 +1,42 @@
-define([], function(calendarpicker) {
+define([], function() {
+	var tipConfigs=[{
+      text:"请先选择流向!",
+      withoutBackCover:true,
+      duration:1000,
+      style:{      	
+        width:200
+      },
+      textStyle:{
+      	fontSize:15
+      }
+    },
+    {
+      text:"请先选择处理人!",
+      withoutBackCover:true,
+      duration:1000,
+      style:{      	
+        width:200
+      },
+      textStyle:{
+      	fontSize:15
+      }
+    },
+    {
+      text:"请填写处理意见!",
+      withoutBackCover:true,
+      duration:1000,
+      style:{      	
+        width:200
+      },
+      textStyle:{
+      	fontSize:15
+      }
+    },
+	];
 	function pageLogic(config) {
 		this.pageviewInstance = config.pageview;
 		this.urlParams = this.pageviewInstance.params;
+		this.userCode = localStorage.getItem("userCode");
 		this.router_data = [];
 
 		this.routerFunc = "";
@@ -20,7 +55,7 @@ define([], function(calendarpicker) {
 					target.hide();
 				});
 				var sendParams = {
-					userCode: this.urlParams.userCode,
+					userCode: this.userCode,
 					actCode: this.urlParams.actCode
 				};
 				Submit(this.urlParams, sendParams, this.pageviewInstance);
@@ -42,10 +77,8 @@ define([], function(calendarpicker) {
 		},
 
 		backIcon_click: function(sender, params) {
-			var sendParams = {
-				userCode: this.urlParams.userCode,
-				actCode: this.urlParams.actCode,
-				procedureName: this.urlParams.procedureName,
+			var sendParams = {				
+				actCode: this.urlParams.actCode,				
 				ptype: this.urlParams.ptype
 			};
 			this.pageviewInstance.replaceGo("procedureInfo", sendParams);
@@ -55,8 +88,11 @@ define([], function(calendarpicker) {
 			this.taskActor_Selected = sender;
 		},
 		radiolist_init: function(sender, params) {
-
-			GetRouterData(this.routerFunc, this.pageviewInstance, this.urlParams, this.router_data);
+			var routerParam={
+				userCode: this.userCode,
+				actCode: this.urlParams.actCode,
+			}
+			GetRouterData(this.routerFunc, this.pageviewInstance, routerParam, this.router_data);
 			this.radiolist = sender;
 			if(this.router_data.length > 0) {
 				var defaultSelectedData = this.router_data[0];
@@ -95,7 +131,9 @@ define([], function(calendarpicker) {
 				ReRouterCode = routerFound[0].id;
 			}
 			if(ReRouterCode.length == 0) {
-				alert("请先选择流向");
+				//alert("请先选择流向");
+				this.pageviewInstance.showTip(tipConfigs[0]);
+				sender.blur();
 				return false;
 			}
 			var sh = {
@@ -147,17 +185,18 @@ define([], function(calendarpicker) {
 			var sendParams;
 			if(this.urlParams.workflowfunc == "WorkFlowSignIn") {
 				sendParams = {
-					userCode: this.urlParams.userCode,
+					userCode: this.userCode,
 					actCode: this.urlParams.actCode
 				};
 			}
 			if(this.urlParams.workflowfunc == "WorkFlowFinish" || this.urlParams.workflowfunc == "WorkFlowTaskFinish") {
 				if(ReOpinion == "") {
-					alert("请填写处理意见");
+					//alert("请填写处理意见");
+					this.pageviewInstance.showTip(tipConfigs[2]);
 					return false;
 				}
 				sendParams = {
-					userCode: this.urlParams.userCode,
+					userCode: this.userCode,
 					actCode: this.urlParams.actCode,
 					opinion: ReOpinion,
 					auditValue: ""
@@ -165,20 +204,23 @@ define([], function(calendarpicker) {
 			}
 			if(this.urlParams.workflowfunc == "WorkFlowSend" || this.urlParams.workflowfunc == "WorkFlowBack") {
 				if(ReRouterCode == "") {
-					alert("请选择流向");
+					//alert("请选择流向");
+					this.pageviewInstance.showTip(tipConfigs[0]);
 					return false;
 				}
 				if(ReTaskActors == "") {
-					alert("请选择处理人");
+					//alert("请选择处理人");
+					this.pageviewInstance.showTip(tipConfigs[1]);
 					return false;
 				}
 				if(ReOpinion == "") {
-					alert("请填写处理意见");
+					//alert("请填写处理意见");
+					this.pageviewInstance.showTip(tipConfigs[2]);
 					return false;
 				}
 
 				sendParams = {
-					userCode: this.urlParams.userCode,
+					userCode: this.userCode,
 					actCode: this.urlParams.actCode,
 					routerCode: ReRouterCode,
 					taskActors: ReTaskActors,
@@ -202,10 +244,7 @@ define([], function(calendarpicker) {
 			dataType: 'jsonp',
 			contentType: "application/json;charset=utf-8",
 			type: 'post',
-			data: {
-				userCode: params.userCode,
-				actCode: params.actCode
-			},
+			data: params,
 			success: function(data) {
 				if(data.result) {
 					returnObj.splice(0, returnObj.length);
@@ -233,10 +272,8 @@ define([], function(calendarpicker) {
 			data: params,
 			success: function(data) {
 				if(data.result) {
-					sender.replaceGo("procedureInfo", {
-						userCode: urlpm.userCode,
-						actCode: urlpm.actCode,
-						procedureName: urlpm.procedureName,
+					sender.replaceGo("procedureInfo", {						
+						actCode: urlpm.actCode,						
 						ptype: urlpm.ptype
 					});
 				} else {
@@ -245,7 +282,7 @@ define([], function(calendarpicker) {
 				sender.hideLoading(true);
 			},
 			error: function(data) {
-				_this.pageviewInstance.hideLoading(true);
+				sender.hideLoading(true);
 			}
 		};
 		sender.ajax(sendParams);
