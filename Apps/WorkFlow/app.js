@@ -5,6 +5,9 @@ define(["utils"], function(utils) {
                 host: "http://10.23.71.57/workflowwebservice55/query.asmx",
                 helppdf: "http://10.23.71.57/workflowwebservice55/pdfjs/web/viewer.html?file=V60WorkFlow-help.pdf",                
                 root: "index",
+                //全局变量
+				yyUserCode: "",
+				yyCouldLogin:true,
                 customerComponents: {
 
                 },

@@ -59,7 +59,8 @@ define([],function(){
              localStorage.setItem("procedureName",sender.datasource.procedureName);
             var param={ptype:"mydone"
             };
-            this.pageviewInstance.replaceGo("procedureList",param);
+            //this.pageviewInstance.replaceGo("procedureList",param);
+            this.pageviewInstance.go("procedureList",param);
         },
     };
     return pageLogic;

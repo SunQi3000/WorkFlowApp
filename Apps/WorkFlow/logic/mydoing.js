@@ -60,7 +60,8 @@ define([],function(){
             var param={
             	ptype:"mydoing"
             };
-            this.pageviewInstance.replaceGo("procedureList",param);
+            //this.pageviewInstance.replaceGo("procedureList",param);
+            this.pageviewInstance.go("procedureList",param);
         },
     };
     return pageLogic;

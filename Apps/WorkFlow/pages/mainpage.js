@@ -7,6 +7,7 @@ define(["../logic/mainpage"],function(pluginClass){
         root:["tabbar"],
         components:{
           tabbar:{
+          	ref:true,
             type:"tabbarview",
             style:{
               flex:1

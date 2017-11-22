@@ -31,11 +31,21 @@ define([], function() {
 				if(selectedName.length > 0) {
 					selectedName += ";";
 				}
-				selectedName += rowdata.userName + "(" + rowdata.taskActorName + ")";
+				selectedName += rowdata.userName ;
+				if(rowdata.taskActorName.length>0){
+					selectedName += "(" + rowdata.taskActorName + ")";
+				}
+				
 				if(selectedCode.length > 0) {
 					selectedCode += ";";
 				}
-				selectedCode += rowdata.userCode + "," + rowdata.taskActorCode;
+				selectedCode += rowdata.userCode;
+				if(rowdata.taskActorName.length>0){					
+					selectedCode += "," + rowdata.taskActorCode;
+				}else{
+					selectedCode += ","; //流程角色为空
+				}
+				
 			}
 			//this.pageviewInstance.ownerPage.plugin.taskActor_value.text=selectedName;
 

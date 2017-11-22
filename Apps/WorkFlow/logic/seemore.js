@@ -3,7 +3,7 @@ define([],function(){
         this.pageviewInstance = config.pageview;
         this.urlParams = this.pageviewInstance.params;
         this.userName=localStorage.getItem("userName");//decodeURI(this.urlParams.userName);
-        
+        this.yyUserCode = config.pageview.pageManager.appConfig.yyUserCode;
     }
     pageLogic.prototype = {
        
@@ -22,7 +22,29 @@ define([],function(){
          }
          if(title=="注销"){
          	localStorage.clear();
-         	this.pageviewInstance.go("index");
+         	if (this.yyUserCode && this.yyUserCode != "")
+			{
+				var params = {
+					url: 'UnBindYy',
+					dataType: 'jsonp',
+					contentType: "application/json;charset=utf-8",
+					type: 'post',
+					data: {
+						yyUserCode: this.yyUserCode
+					},
+					success: function(data) {
+						if(data.result) {
+				         	this.pageviewInstance.replaceGo("index");
+						} else {
+							//alert(data.msg);
+						}
+					},
+				};
+				this.pageviewInstance.ajax(params);
+			}else{
+				this.pageviewInstance.replaceGo("index");
+			}
+         	
          }
         },
         backIcon_click:function(sender,params){

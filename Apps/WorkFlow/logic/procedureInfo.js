@@ -66,7 +66,7 @@ define([], function() {
 				sender.pageviewInstance.hideLoading(true);
 			},
 			error: function(data) {
-				_this.pageviewInstance.hideLoading(true);
+				sender.pageviewInstance.hideLoading(true);
 			}
 		};
 		sender.pageviewInstance.ajax(sendParams);
@@ -79,12 +79,20 @@ define([], function() {
 		onPageLoad: function() {
 			LoadData(this);
 		},
+		onPageResume: function() {
+        	//alert("onPageResume");
+        	//alert(window.location.href);
+        	//window.location.reload(); 
+        	LoadData(this);
+        	this.page_content_reload();
+        },
 		backIcon_click: function(sender, params) {
-			//this.pageviewInstance.goBack();
-			var param = {				
+			this.pageviewInstance.goBack();
+			/*var param = {				
 				ptype: this.urlParams.ptype
 			};
 			this.pageviewInstance.replaceGo("procedureList", param);
+			*/
 		},
 		header_title_init: function(sender, params) {
 			this.header_title = sender;
@@ -107,7 +115,8 @@ define([], function() {
 				workflowfunc: sender.datasource.func,				
 				ptype: this.urlParams.ptype
 			};
-			this.pageviewInstance.replaceGo("flowSend", param);
+			//this.pageviewInstance.replaceGo("flowSend", param);
+			this.pageviewInstance.go("flowSend", param);
 			this.poplayer.hide();
 		},
 		cancelIcon_click: function(sender, params) {

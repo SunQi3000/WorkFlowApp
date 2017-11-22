@@ -77,12 +77,13 @@ define([], function() {
 		},
 
 		backIcon_click: function(sender, params) {
-			var sendParams = {				
+			/*var sendParams = {				
 				actCode: this.urlParams.actCode,				
 				ptype: this.urlParams.ptype
 			};
 			this.pageviewInstance.replaceGo("procedureInfo", sendParams);
-			//this.pageviewInstance.goBack();
+			*/
+			this.pageviewInstance.goBack();
 		},
 		taskActor_Selected_init: function(sender) {
 			this.taskActor_Selected = sender;
@@ -272,10 +273,12 @@ define([], function() {
 			data: params,
 			success: function(data) {
 				if(data.result) {
+					/*
 					sender.replaceGo("procedureInfo", {						
 						actCode: urlpm.actCode,						
 						ptype: urlpm.ptype
-					});
+					});*/
+					this.pageviewInstance.goBack();
 				} else {
 					alert(data.msg);
 				}

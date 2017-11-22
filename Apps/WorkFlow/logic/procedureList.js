@@ -21,6 +21,12 @@ define(["../js/func"], function() {
 
 	}
 	pageLogic.prototype = {
+		onPageResume: function() {
+        	//alert("onPageResume");
+        	//alert(window.location.href);
+        	//window.location.reload(); 
+        	this.page_content_reload();
+        },
 
 		header_title_init: function(sender, params) {
 			this.header_title = sender;
@@ -33,11 +39,13 @@ define(["../js/func"], function() {
 			sender.config.font = sender.datasource.icon;
 		},
 		backIcon_click: function(sender, params) {
-			//this.pageviewInstance.goBack();
-			var param={           	
+			
+			this.pageviewInstance.goBack();
+			/*var param={           	
             	$$pn:this.urlParams.ptype
             };
 		    this.pageviewInstance.replaceGo("mainpage",param);
+		    */
 		},
 		right_icon_click: function(sender, params) {
 			this.page_content_reload();
@@ -107,7 +115,8 @@ define(["../js/func"], function() {
 				actCode: sender.datasource.actCode,				
 				ptype:this.urlParams.ptype
 			};
-			this.pageviewInstance.replaceGo("procedureInfo",param);
+			//this.pageviewInstance.replaceGo("procedureInfo",param);
+			this.pageviewInstance.go("procedureInfo",param);
 		},
 		
 		segment_change: function(sender, params) {
