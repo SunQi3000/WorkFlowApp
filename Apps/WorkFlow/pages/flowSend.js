@@ -104,6 +104,7 @@ define(["../logic/flowSend"], function(pluginClass) {
 
 			audit_wrapper: {
 				type: "view",
+				ref:true,
 				style: {
 					flexDirection: "row",
 					justifyContent: "space-between",

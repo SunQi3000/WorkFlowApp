@@ -19,8 +19,14 @@ define([], function() {
 		this.shParams = this.pageviewInstance.showPageParams;
 	}
 	pageLogic.prototype = {
+		onPageResume: function() {
+        	//alert("onPageResume");
+        	//var obj=this.pageviewInstance.innerPages["selectActor"];
+        	
+        },
 		backIcon_click: function() {
-			this.pageviewInstance.goBack();
+			this.pageviewInstance.close();
+			//this.pageviewInstance.goBack();
 		},
 		header_right_text_click: function() {
 			var selectedRows = this.listview.selectedRows;
@@ -63,7 +69,7 @@ define([], function() {
 		page_content_pulltorefresh: function(sender, params) {
 			//刷新的时候执行加载第一页的数据
 			var _this = this;
-
+			this.listview.clearSelectAll();
 			this.listview.loadFirstPageData();
 
 		},

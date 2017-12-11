@@ -106,7 +106,14 @@ define([], function() {
 			successCallback(this.router_data);
 		},
 		radiolist_selected: function(sender, params) {
-			this.router_value.setText(params.selectedValue[0].label);
+			var oldtext=this.router_value.text;
+			this.router_value.setText(params.selectedValue[0].label);	
+			if(oldtext!=this.router_value.text){
+				this.taskActor_value.setValue("");
+				this.taskActor_Selected.setText("");
+				delete this.pageviewInstance.innerPages["selectActor"];
+        		delete this.pageviewInstance.innerPagesWrappers["selectActor"];
+			}
 		},
 
 		router_value_didmount: function(sender, params) {
@@ -200,7 +207,7 @@ define([], function() {
 					userCode: this.userCode,
 					actCode: this.urlParams.actCode,
 					opinion: ReOpinion,
-					auditValue: ""
+					auditValue: ReAuditValue
 				};
 			}
 			if(this.urlParams.workflowfunc == "WorkFlowSend" || this.urlParams.workflowfunc == "WorkFlowBack") {

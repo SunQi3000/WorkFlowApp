@@ -5,8 +5,8 @@ define([],function(){
         this.urlParams = this.pageviewInstance.params;        
         //是否能使用友空间
 		this.IsYonyouCould=false;		
-		//是否启用友空间登录
-		this.yyCouldLogin = config.pageview.pageManager.appConfig.yyCouldLogin;
+		//是否启用友空间登录取消控制
+		this.yyCouldLogin = true;//config.pageview.pageManager.appConfig.yyCouldLogin;
 		//友空间用户Code
 		this.yyUserCode = "";
 		//友空间yyCode

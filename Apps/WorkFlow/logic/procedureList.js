@@ -8,7 +8,7 @@ define(["../js/func"], function() {
 
 		this.selectedSeg = "今日";
 		var strToday = getDate(); //当日 
-		var strYesterday=getDate(-1);//昨天
+		var strYesterday=getMonday('e',-1);;//上周日
 		var strMonday = getMonday('s', 0);
 		var strSunday = getMonday('e', 0);
 		this.strTodayTimeStart = strToday + " 00:00:00";
@@ -17,15 +17,17 @@ define(["../js/func"], function() {
 		this.strSundayTimeEnd = strSunday + " 23:59:59";
 		this.strYesterdayTimeEnd=strYesterday+ " 23:59:59";
 		this.strYesterdayTimeStart="1900-1-1";
+		//alert("strToday="+strToday);
+		//alert("week="+strMonday+"--"+strSunday);
+		//alert("early="+this.strYesterdayTimeStart+"--"+this.strYesterdayTimeEnd);
 		
-
 	}
 	pageLogic.prototype = {
 		onPageResume: function() {
         	//alert("onPageResume");
         	//alert(window.location.href);
         	//window.location.reload(); 
-        	this.page_content_reload();
+        	this.listview.loadFirstPageData();
         },
 
 		header_title_init: function(sender, params) {

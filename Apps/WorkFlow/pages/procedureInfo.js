@@ -139,10 +139,10 @@ define(["../logic/procedureInfo"], function(pluginClass) {
 					url: "GetWorkFlowPage",
 					type: "GET",
 					dataType: "jsonp",
-					pageSize: 20,
+					pageSize: 99999,
 					pageNumKey: "pageNum",
 					data: {
-						pageSize: 20
+						pageSize: 99999
 					},
 				},
 				style: {

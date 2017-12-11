@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "echarts": "^3.8.5",
     "express": "^4.14.0",
     "flf-gulp-file-hash": "^0.2.0",
     "glob": "^7.1.1",
